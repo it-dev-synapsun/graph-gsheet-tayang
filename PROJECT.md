@@ -60,10 +60,10 @@ Arbitrage hébergement tranché le 2026-07-27 (décision consignée dans `Design
 - [ ] EN ATTENTE de décision : extension du contrat JSON en schema v2 (FOB/fret/DDP/argent historique/structure de coût — aujourd'hui iframes Zoho du dashboard GitHub Pages) pour élargir la page portail sans iframe ni cookie tiers
 - [ ] Réaligner le Lot 1 roadmap v2 : formulaire d'abonnement hebdo sur la page portail → canal ZohoLeadApiWriter existant (pas de liste parallèle)
 
-### Tâche 7 — Réparer l'authentification gh du compte synapsun-dev (découvert 2026-08-03)
-Constat : `gh auth status` ne montre plus qu'un seul compte actif (`Franckcx69`) ; l'ancien compte `it-dev-synapsun` (renommé `synapsun-dev` sur GitHub le 2026-06-11) a un token invalide localement et `gh auth switch -u it-dev-synapsun` échoue avec « no token found ». Conséquence : `gh api repos/synapsun-dev/barometer-scrap-taiyang` renvoie 404 (repo privé invisible depuis Franckcx69) — impossible de vérifier depuis une session Claude Code l'état du repo frère (cron scraper `pv_price_weekly.yml`, historique des runs) tant que ce compte n'est pas ré-authentifié.
-- [ ] Franck exécute `gh auth login -h github.com` et se ré-authentifie en tant que `synapsun-dev` (flux navigateur, geste humain — un agent ne peut pas compléter l'OAuth interactif)
-- [ ] Revalider ensuite `gh run list --repo synapsun-dev/barometer-scrap-taiyang --workflow pv_price_weekly.yml` pour confirmer que le cron hebdo tourne toujours (dernière vérification confirmée : 2026-07-01)
+### ✅ Tâche 7 — Réparer l'authentification gh du compte synapsun-dev (terminée 2026-08-07)
+Constat du 2026-08-03 : token synapsun-dev invalide localement, repo frère invisible (404).
+- [x] Compte `synapsun-dev` ré-authentifié dans gh (keyring — constaté opérationnel le 2026-08-07 ; seule l'ancienne entrée `it-dev-synapsun` reste invalide, purgeable via `gh auth logout -h github.com -u it-dev-synapsun`)
+- [x] Revalidé le 2026-08-07 : `gh run list --repo synapsun-dev/barometer-scrap-taiyang --workflow pv_price_weekly.yml` → 3 derniers runs schedule success (2026-07-20, 2026-07-27, 2026-08-03), cron hebdo sain
 
 ### Tâche 8 — Vérifier les restrictions de la clé API Google Sheets côté navigateur (constat gitleaks 2026-08-07)
 La clé `AIzaSy…` embarquée dans `barometre-synapsun.html` (appel sheets.googleapis.com v4 côté client) est publique par conception (servie à chaque visiteur via GitHub Pages). Signalée par gitleaks au commit du 2026-08-07 — pas d'exposition nouvelle, mais l'hygiène doit être confirmée.
