@@ -53,5 +53,16 @@
         "error": ""
       }
     ]
+  },
+  "TASK-20260716-014822": {
+    "attempts": [
+      {
+        "date": "2026-07-16 01:48",
+        "tool_calls_summary": "",
+        "files_modified": [],
+        "partial_output_tail": "You've hit your weekly limit · resets Jul 18, 1pm (Europe/Paris)",
+        "error": ""
+      }
+    ]
   }
 }

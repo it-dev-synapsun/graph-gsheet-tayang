@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.10.1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Baromètre × Design System — intégration synapsun.com</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      font-family: Segoe UI;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Baromètre × Design System — intégration
+synapsun.com</h1>
+</header>
+<h1
+id="baromètre-design-system-modifications-pour-une-intégration-facile-et-stable-sur-synapsun.com">Baromètre
+× Design System — modifications pour une intégration facile et stable
+sur synapsun.com</h1>
+<blockquote>
+<p>Analyse du 2026-08-07 — croisement du projet Barometer avec le
+<strong>Design System Synapsun</strong>
+(<code>Design_System/livrables/BRIEF_PACK_SYNAPSUN/</code>, snapshot
+portail SHA <code>6e877ac7</code> du 2026-07-27). Prolonge
+<code>docs/ADAPTATIONS_INTEGRATION_SYNAPSUN_COM.md</code> (2026-07-17) :
+la Phase 0 (contrat JSON, canonicals, snapshot mensuel) était déjà
+livrée ; ce document couvre la <strong>Phase 1 front</strong>, désormais
+outillée par le design system.</p>
+</blockquote>
+<hr />
+<h2 id="fait-nouveau-larbitrage-hébergement-est-tranché">1. Fait nouveau
+: l’arbitrage hébergement est tranché</h2>
+<p>La question bloquante « portail vs GitHub Pages » qui gelait la Tâche
+6 du PROJECT.md <strong>a été tranchée le 2026-07-27</strong> lors de la
+construction du design system : <strong>hébergement portail
+retenu</strong>, pipeline externe conservé comme source de vérité
+(décision consignée dans <code>07_PATTERNS_AVANCES.md</code> §12 «
+Ingestion de données externes », cas réel = le Baromètre, question L1 du
+questionnaire IT).</p>
+<p>Conséquences immédiates : - la Tâche 6 (« EN ATTENTE de l’arbitrage
+») est <strong>débloquée</strong> ; - le chemin d’intégration officiel
+est le <strong>workflow du BRIEF_PACK</strong> : fiche de conception →
+prototype HTML autonome conforme au design system → conversion Twig («
+code + specs », doc 06) ; - le dashboard GitHub Pages actuel devient à
+terme la préversion/environnement de dev (Phase 0 §2.4).</p>
+<hr />
+<h2
+id="grille-danalyse-dashboard-actuel-vs-exigences-du-design-system">2.
+Grille d’analyse — dashboard actuel vs exigences du design system</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>Écart constaté (Barometer aujourd’hui)</th>
+<th>Exigence design system</th>
+<th>Traitement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M1</td>
+<td>Monolithe HTML 91 Ko, CSS/JS inline, structure maison (hero, TOC
+sticky, sections custom)</td>
+<td>Page <code>visitor/layout.html.twig</code>, composants du catalogue
+uniquement (<code>section__*</code>, <code>card</code>,
+<code>table</code>, <code>badge</code>, <code>breadcrumb</code>), zéro
+CSS custom</td>
+<td>✅ <strong>Appliqué</strong> — prototype reconstruit sur
+<code>starter_visitor.html</code>, 0 <code>&lt;style&gt;</code> custom,
+100 % composants catalogués</td>
+</tr>
+<tr>
+<td>M2</td>
+<td>8 dépendances tierces côté navigateur (CSV gviz, sheets.googleapis,
+API BCE, open.er-api, currency-api, flagcdn, CDN Chart.js, 2 iframes
+Zoho Analytics)</td>
+<td>Aucun appel externe au moment de la visite ; FX/argent figés dans le
+contrat JSON ; Chart.js via bundle Encore
+(<code>@symfony/ux-chartjs</code>) ; pas de cookies tiers
+(CSP/RGPD)</td>
+<td>✅ <strong>Appliqué au prototype</strong> — données 100 %
+embarquées/serveur, FX figés affichés ; Chart.js CDN restant = démo
+uniquement, flagué pour conversion Encore</td>
+</tr>
+<tr>
+<td>M3</td>
+<td>i18n maison (toggle FR/EN en JS, textes en dur, drapeaux
+flagcdn)</td>
+<td>Clés Loco <code>page.barometer.*</code> (convention
+<code>{global}.{second}.{internal}.{component}.{atom}</code>), sélecteur
+de langue natif du layout, hreflang automatique</td>
+<td>✅ <strong>Appliqué</strong> — 41 clés <code>data-i18n</code> posées
++ tableau FR/EN complet ; toggle maison supprimé (layout du portail s’en
+charge)</td>
+</tr>
+<tr>
+<td>M4</td>
+<td>Dataviz : couleurs non normées, iframes Zoho, graphiques sans
+contrat d’accessibilité</td>
+<td>Chart.js uniquement (pattern 7), palette issue des tokens
+<code>01_TOKENS.md</code>, accessibilité dataviz</td>
+<td>✅ <strong>Appliqué</strong> — palette catégorielle <strong>validée
+par le validateur 6-checks de la skill dataviz</strong> :
+<code>#536cc6</code> (secondary-lighter) → <code>#e27928</code>
+(primary) → <code>#10b2bd</code> (lagoon) → <code>#a765de</code> (pink),
+ordre fixe ; légende + tooltips croisés + <strong>vue tableau
+adjacente</strong> (relief exigé, pastilles couleur liant tableau et
+séries) ; lignes 2 px, grille en retrait, <code>aria-label</code> par
+graphique</td>
+</tr>
+<tr>
+<td>M5</td>
+<td>SEO : canonicals corrigés en Phase 0 vers <code>/barometre</code> ·
+<code>/barometer</code> ; meta à la main</td>
+<td><code>meta_title</code>/<code>meta_desc</code> définis par le
+contrôleur, route déjà dans le sitemap, un seul <code>h1</code>,
+hiérarchie Hn</td>
+<td>✅ <strong>Appliqué</strong> — meta proposés (56/155 car.) dans la
+fiche §6 ; structure <code>h1</code> + <code>h2</code> de sections
+conforme aux mixins du portail</td>
+</tr>
+<tr>
+<td>M6</td>
+<td>Données poussées vers le navigateur (fetch JSON GitHub Pages +
+fallback CSV)</td>
+<td>Import côté serveur : <strong>cron pull
+<code>app:import:barometer</code></strong> (cookbook
+<code>cli/import_command.md</code>, Sentry Monitor) recommandé ;
+alternative webhook authentifié (pattern 12)</td>
+<td>📋 <strong>Consigné</strong> — fiche §2 + INTEGRATION-NOTES
+(décision pull/push à confirmer à la conversion)</td>
+</tr>
+<tr>
+<td>M7</td>
+<td>Pas de filet de déploiement</td>
+<td>Feature flag <code>barometer_v2</code> + fallback
+<code>barometer_missing.html.twig</code> (image + PDF mensuels
+existants)</td>
+<td>📋 <strong>Consigné</strong> — fiche §8 + INTEGRATION-NOTES
+(rollback = désactiver le flag)</td>
+</tr>
+<tr>
+<td>M8</td>
+<td>Page invisible dans la navigation du portail</td>
+<td>Entrée de menu via
+<code>MenuNavigationExtension::getMenuMain()</code> (jamais le
+template)</td>
+<td>📋 <strong>Consigné</strong> — « Ressources → Baromètre des prix »
+proposé (clé <code>menu.barometer</code>), annoté dans le prototype</td>
+</tr>
+<tr>
+<td>M9</td>
+<td>Aucun <code>data-test-id</code>, pas de tests Application</td>
+<td>Convention <code>data-test-id</code> (kebab-case métier) + tests
+<code>ShowPublicActionTestInterface</code> niveau 2</td>
+<td>✅ <strong>Appliqué (niveau 1)</strong> — 27
+<code>data-test-id</code> posés, conservés tels quels à la conversion ;
+tests niveau 2 spécifiés par le paquet spec_IT</td>
+</tr>
+<tr>
+<td>M10</td>
+<td>Sections argent/structure de coût/FOB/fret/DDP alimentées par
+iframes Zoho + APIs live</td>
+<td>Toute donnée affichée doit venir du contrat JSON importé côté
+serveur</td>
+<td>📋 <strong>Consigné</strong> — <strong>non repris en v1</strong>
+(données absentes du schéma v1) ; extension
+<code>schema_version 2</code> candidate — voir §5</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Verdict d’ensemble</strong> : aucun composant manquant au
+catalogue (zéro <code>&lt;style data-integration&gt;</code> nécessaire)
+— la page Baromètre est entièrement réalisable avec le design system
+existant. Le seul « nouveau composant » est fonctionnel, pas visuel : le
+contrôleur Stimulus de graphiques, déjà standardisé par
+<code>@symfony/ux-chartjs</code>.</p>
+<hr />
+<h2 id="modifications-appliquées-ce-jour-livrables">3. Modifications
+appliquées ce jour (livrables)</h2>
+<ol type="1">
+<li><strong><code>livrables/PROTOTYPE_PORTAIL_BAROMETRE/prototype_barometre_visitor.html</code></strong>
+— prototype autonome niveau 1 de la page <code>/barometre</code> v2,
+conforme au BRIEF_PACK :
+<ul>
+<li>basé sur <code>starter_visitor.html</code> (header/footer réels du
+portail), assets de prod embarqués ;</li>
+<li>6 KPI cards, bloc « L’analyse Synapsun » (champ
+<code>market_comment</code>, contenu simulé, masqué si null), 5 sections
+catégorie (graphique Chart.js + tableau), taux de change figés, édition
+mensuelle PDF (route <code>front_barometer_download</code> existante),
+méthodologie, CTA contact ;</li>
+<li>données réelles W28-2026 embarquées depuis
+<code>data/barometer.json</code> (schema v1) ;</li>
+<li>annotations de conversion complètes : <code>data-i18n</code> (41),
+<code>data-auth="public"</code>, <code>#route:</code> (43),
+<code>data-test-id</code> (27), tableau de traductions FR/EN, bloc
+INTEGRATION-NOTES.</li>
+</ul></li>
+<li><strong><code>livrables/PROTOTYPE_PORTAIL_BAROMETRE/FICHE_PAGE_BAROMETRE.md</code></strong>
+— fiche de conception remplie (sections bloquantes
+Données/Écritures/Sécurité incluses), prête à accompagner le
+prototype.</li>
+<li><strong>Jeu de tests niveau 1 exécuté : 30/30 OK</strong> (voir
+§6).</li>
+<li><strong>PROJECT.md</strong> — Tâche 6 débloquée et re-séquencée,
+question hébergement marquée résolue, nouvelles questions de validation
+consignées.</li>
+</ol>
+<h2 id="rapport-de-test-protocole-05_jeu_de_tests.md-niveau-1">4.
+Rapport de test (protocole 05_JEU_DE_TESTS.md, niveau 1)</h2>
+<pre><code>PLAN DE TEST — Prototype page portail /barometre v2
+[x] A  Rendu 4 breakpoints (375/768/1200/1600) → aucun débordement ; nav mobile jusqu&#39;à 1440px, desktop au-delà
+[x] B  Conformité design system → 0 &lt;style&gt; custom ; toutes les couleurs ∈ tokens 01_TOKENS
+[x] C  Éléments interactifs (présence / cursor+href / effet du clic) → CTA contact, download PDF, breadcrumb, hover tooltip graphique
+[x] D  i18n → 41 clés data-i18n = tableau FR/EN, convention snake_case.dot respectée
+[x] E  Annotations conversion → data-auth, #route: (43), data-test-id (27), INTEGRATION-NOTES
+[x] F  Données/états → 5 graphiques (4/2/3/2/2 séries), 5 tableaux (13 lignes), W28-2026, KPI 0,68 RMB/W ; état vide market_comment documenté
+---
+RÉSULTATS : 30/30 OK (exécution Playwright/Chromium, 2026-08-07)
+---
+STATUT GLOBAL : VALIDÉ</code></pre>
+<p>Contrôle visuel effectué (captures) : rendu conforme au portail —
+titres <code>h2</code> à barre latérale orange, cards, tableaux stylés,
+graphiques dans la palette validée avec légende et pastilles de
+liaison.</p>
+<hr />
+<h2 id="ce-qui-reste-à-faire-consigné-au-project.md-tâche-6">5. Ce qui
+reste à faire (consigné au PROJECT.md, Tâche 6)</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Étape</th>
+<th>Contenu</th>
+<th>Référence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Recette métier du prototype</td>
+<td>Franck déroule les critères d’acceptation de la fiche §8 (ouvrir le
+prototype dans un navigateur)</td>
+<td><code>FICHE_PAGE_BAROMETRE.md</code> §8</td>
+</tr>
+<tr>
+<td>Conversion Twig « code + specs »</td>
+<td>Session Claude Code avec clone <code>portal-repo</code>, prompt prêt
+à l’emploi §6 de <code>06_CONVERSION_TWIG.md</code> → paquet
+<code>spec_IT_barometre/</code> (contrôleur single-action, ViewModel,
+template visitor, contrôleur Stimulus chart, clés Loco, cron import +
+Sentry, feature flag, tests Application)</td>
+<td><code>06_CONVERSION_TWIG.md</code></td>
+</tr>
+<tr>
+<td>Acheminement des données</td>
+<td>Trancher cron pull <code>app:import:barometer</code> (recommandé) vs
+webhook push</td>
+<td>fiche §2, pattern 12</td>
+</tr>
+<tr>
+<td>Extension schéma v2 (optionnelle)</td>
+<td>Rapatrier dans le contrat JSON les données aujourd’hui servies par
+les iframes Zoho / APIs live du dashboard GitHub Pages : FOB modules,
+fret maritime, DDP Europe, historique argent, structure de coût — pour
+élargir la page portail sans iframe ni cookie tiers</td>
+<td><code>export_json.py</code> (pipeline)</td>
+</tr>
+<tr>
+<td>Lot 1 roadmap</td>
+<td>Formulaire d’abonnement hebdo sur la page portail → canal
+<code>ZohoLeadApiWriter</code> existant ; commentaire de marché auto →
+champ <code>market_comment</code> déjà prévu</td>
+<td>roadmap v2 PROJECT.md</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Aucune modification appliquée aux dashboards GitHub Pages
+existants</strong> (<code>index.html</code>,
+<code>barometre-synapsun.html</code>) : ils restent le rendu de
+production actuel et l’entrée du snapshot mensuel PNG/PDF (contraintes
+EasyAdmin ≤ 2 Mo / ≤ 4 Mo) — les restyler avant la bascule portail
+ferait courir un risque au pipeline sans bénéfice (ils deviendront
+préversion une fois la page portail en ligne).</p>
+<hr />
+<h2 id="questions-à-trancher">6. Questions à trancher</h2>
+<ol type="1">
+<li><strong>Prototype validé pour conversion ?</strong> — recette métier
+fiche §8 par Franck, puis lancement de la conversion Twig (paquet
+<code>spec_IT_barometre/</code>).</li>
+<li><strong>Extension du contrat JSON (schema v2)</strong> — faut-il
+rapatrier FOB/fret/DDP/argent/structure de coût dans le JSON pour une
+page portail complète, ou lancer la v1 avec les 5 catégories TaiyangNews
++ FX ?</li>
+</ol>
+<hr />
+<p><em>Références : <code>BRIEF_PACK_SYNAPSUN/</code> docs 00-09 ·
+<code>docs/ADAPTATIONS_INTEGRATION_SYNAPSUN_COM.md</code> ·
+<code>data/barometer.json</code> (schema v1, W28-2026) · tests :
+Playwright/Chromium local, 30/30 OK.</em></p>
+
+<section class="livrable-blocking-questions" aria-label="Questions à trancher">
+  <h2 class="lbq-title">⚠️ Question(s) à trancher par Franck</h2>
+  <p class="lbq-intro">Réponds directement ci-dessous : ta réponse est enregistrée comme <strong>décision</strong> — consignée pour exécution (le suivi projet et le travail débloqué sont traités à un run ultérieur, pas instantanément), et ce livrable est annoté avec ta réponse et sa date. Le document n'est pas réécrit.</p>
+  <ul class="lbq-list">
+    <li class="lbq-item" data-question-id="prototype-barometre-validation">
+      <div class="lbq-question">Prototype /barometre v2 (livrables/PROTOTYPE_PORTAIL_BAROMETRE/) validé en recette métier pour lancer la conversion Twig (paquet spec_IT_barometre) ?</div>
+      <button type="button" class="lbq-answer-btn" data-question-id="prototype-barometre-validation" data-question-text="Prototype /barometre v2 (livrables/PROTOTYPE_PORTAIL_BAROMETRE/) validé en recette métier pour lancer la conversion Twig (paquet spec_IT_barometre) ?">✍️ Répondre à cette question</button>
+    </li>
+    <li class="lbq-item" data-question-id="extension-schema-json-v2">
+      <div class="lbq-question">Étendre le contrat JSON (schema v2) aux données FOB/fret/DDP/argent/structure de coût (aujourd&#x27;hui iframes Zoho) ou lancer la page portail v1 avec les 5 catégories TaiyangNews + FX ?</div>
+      <button type="button" class="lbq-answer-btn" data-question-id="extension-schema-json-v2" data-question-text="Étendre le contrat JSON (schema v2) aux données FOB/fret/DDP/argent/structure de coût (aujourd&#x27;hui iframes Zoho) ou lancer la page portail v1 avec les 5 catégories TaiyangNews + FX ?">✍️ Répondre à cette question</button>
+    </li>
+  </ul>
+</section>
+<div id="feedback-widget" class="feedback-widget" data-project="Barometer">
+  <div class="feedback-container">
+    <label for="feedback-text">💬 Feedback sur ce livrable</label>
+    <textarea id="feedback-text" class="feedback-textarea" placeholder="Une correction, une priorité à revoir, un point à approfondir…" rows="3"></textarea>
+    <div class="feedback-mode-selector">
+      <span class="feedback-mode-label">⚙️ Traitement :</span>
+      <div class="feedback-mode-options">
+        <div class="feedback-mode-option">
+          <input type="radio" id="feedback-mode-immediate" name="feedback-mode" value="immediate" checked>
+          <label for="feedback-mode-immediate">⚡ Immédiat</label>
+          <span class="feedback-mode-hint">Claude traite maintenant</span>
+        </div>
+        <div class="feedback-mode-option">
+          <input type="radio" id="feedback-mode-queue" name="feedback-mode" value="queue">
+          <label for="feedback-mode-queue">⏳ Différé (nightly)</label>
+          <span class="feedback-mode-hint">Traité cette nuit</span>
+        </div>
+      </div>
+    </div>
+    <button id="feedback-submit" class="feedback-btn">📤 Envoyer</button>
+    <div id="feedback-status" class="feedback-status"></div>
+  </div>
+</div>
+<link rel="stylesheet" href="../../../Dashboard_Pilotage/scripts/assets/feedback-widget.css">
+<script src="../../../Dashboard_Pilotage/scripts/assets/feedback-widget.js"></script>
+</body>
+</html>

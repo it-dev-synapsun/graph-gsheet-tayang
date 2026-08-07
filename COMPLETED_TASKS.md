@@ -793,3 +793,319 @@ input=226 | output=12,667 | cache_read=1,509,824 | cache_creation=46,631
 
 ### Code retour
 exit 0
+
+---
+## 2026-06-27 11:44 — Session de nuit (sous-tâche)
+
+### Tache travaillee
+Diagnostiquer et configurer SSH ou credential manager pour résoudre l'erreur git push
+
+### SYNTHESE
+Diagnostic et configuration SSH/Credentials pour Barometer réalisée : RSA 4096-bit key générée, SSH config préparé, Credential Manager Windows testé et validé ✅, guides de migration documentés. Git push et fetch fonctionnent sans erreur sur HTTPS.
+
+### VALEUR APPORTEE
+Élimine le risque de blocage credential et prépare deux chemins sécurisés pour git push : continuation stable via Credential Manager ou migration vers SSH pour l'automation CI/CD (après ajout de la clé publique à GitHub). Documente la question bloquante sans friction, prêt pour le cron du 29 juin 2026.
+
+### PROBLEMES ET ITERATIONS
+RAS — exécution directe. Credential Manager Windows fonctionne dès la première tentative de push ; SSH est prêt côté local en attente d'ajout de la clé publique à GitHub (action manuelle web UI requise, non-bloquante).
+
+### FICHIERS
+- `SSH_CREDENTIALS_SETUP.md` — Guide complet: diagnostique des 2 options (HTTPS + Credential Manager vs SSH), instructions de migration, troubleshooting et clé publique à copier
+- `switch-to-ssh.ps1` — Script PowerShell réutilisable pour migration SSH automatisée (tests, verification, fallback HTTPS)
+- `PROJECT.md` — Mis à jour: prochaine_action clarifié, historique récent + ligne de session ajoutée, question bloquante résolue
+- Commit `255b6c7` poussé vers GitHub ✅
+
+### NEXT STEPS
+Optionnel — Ajouter la clé publique SSH à GitHub (Settings → SSH Keys → New SSH key) et exécuter `.\switch-to-ssh.ps1` pour migrer de HTTPS vers SSH. Sinon, continuer avec HTTPS + Credential Manager actuellement stable. Lundi 29 juin 08:00 UTC : vérifier le scraper cron pour W26-2026 avec la configuration git opérationnelle.
+
+## QUESTIONS BLOQUANTES
+
+[AUCUNE — Tâche terminée avec succès]
+
+### Tokens
+input=162 | output=10,912 | cache_read=863,325 | cache_creation=34,445
+
+### Code retour
+exit 0
+
+---
+## 2026-06-30 01:33 — Tache manuelle (dashboard)
+
+### Tache
+Test plan
+
+### Commentaire
+[Auto-reprise TOKEN_LIMIT]
+
+### Resultat
+(pas de texte final — voir Stderr)
+
+### Code retour
+exit 1
+
+### Stderr
+'"C:\Users\Franck\AppData\Roaming\npm\\node_modules\@anthropic-ai\claude-code\bin\claude.exe"' n'est pas reconnu en tant que commande interne
+ou externe, un programme ex�cutable ou un fichier de commandes.
+
+---
+## 2026-06-30 01:33 — Tache manuelle (dashboard)
+
+### Tache
+Test plan
+
+### Commentaire
+[Auto-reprise TOKEN_LIMIT]
+
+### Resultat
+(pas de texte final — voir Stderr)
+
+### Code retour
+exit 1
+
+### Stderr
+'"C:\Users\Franck\AppData\Roaming\npm\\node_modules\@anthropic-ai\claude-code\bin\claude.exe"' n'est pas reconnu en tant que commande interne
+ou externe, un programme ex�cutable ou un fichier de commandes.
+
+---
+## 2026-06-30 02:35 — Tache manuelle (dashboard) (retry 1/2)
+
+### Tache
+Test plan
+
+### Commentaire
+Retry automatique 1/2 — échec précédent rc=1
+
+### Resultat
+{"type":"system","subtype":"hook_started","hook_id":"e8417fc9-2694-4474-aa50-7a5f6fb6cbae","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"23341fcd-0f61-46d6-bd9f-1fe77c6587a8","session_id":"ebed7c04-6a03-4e00-89f7-ccca60e91d16"}
+{"type":"system","subtype":"hook_started","hook_id":"7ec75926-9234-45a6-b7fc-dd39aef9ce78","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"62e84538-f013-474a-8a9c-b18536781648","session_id":"ebed7c04-6a03-4e00-89f7-ccca60e91d16"}
+{"type":"system","subtype":"hook_started","hook_id":"da32fe96-acc3-47f2-ae2a-2324021da1eb","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"748f7fdc-302d-4c08-b433-40b41fca9be1","session_id":"ebed7c04-6a03-4e00-89f7-ccca60e91d16"}
+{"type":"system","subtype":"hook_started","hook_id":"4a644eea-46d9-4267-80ab-80bcd8e75f5b","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"a2f22597-39c9-4eb0-ae1d-63b92f1f1f5e","session_id":"ebed7c04-6a03-4e00-89f7-ccca60e91d16"}
+{"type":"system","subtype":"hook_progress","hook_id":"e8417fc9-2694-4474-aa50-7a5f6fb6cbae","hook_name":"SessionStart:startup","hook_event":"SessionStart","stdout":"Windows PowerShell\r\nCopyright (C) Microsoft Corporation. Tous droits r�serv�s.\r\n\r\nInstallez la derni�re version de PowerShell pour de nouvelles fonctionnalit�s et am�liorations�! https://aka.ms/PSWindows\r\n\r\n","stderr":"L'argument ��C:/claude/scripts/init-project.ps1�� du param�tre -File n'existe pas. Indiquez le chemin d'acc�s vers un fichier ��.ps1�� existant pour l'argument du param�tre -File.\r\n","output":"Windows PowerShell\r\nCopyright (C) Microsoft Corporation. Tous droits r�serv�s.\r\n\r\nInstallez la derni�re version de PowerShell pour de nouvelles fonctionnalit�s et am�liorations�! https://aka.ms/PSWindows\r\n\r\nL'argument ��C:/claude/scripts/init-project.ps1�� du param�tre -File n'existe pas. Indiquez le chemin d'acc�s vers un fichier ��.ps1�� existant pour l'argument du param�tre -File.\r\n","uuid":"c8970dab-c46f-493c-ae3a-29365d02ee9f","session_id":"ebed7c04-6a03-4e00-89f7-ccca60e91d16"}
+{"type":"system","subtype":"hook_response","hook_id":"da32fe96-acc3-47f2-ae2a-2324021da1eb","hook_name":"SessionStart:startup","hook_event":"SessionStart","output":"","stdout":"","stderr":"","exit_code":0,"outcome":"success","uuid":"7f175036-5084-4782-9fa7-3288e4c90e77","session_id":"ebed7c04-6a03-4e00-89f7-ccca60e91d16"}
+{"type":"system","subtype":"hook_progress","hook_id":"4a644eea-46d9-4267-80ab-80bcd8e75f5b","hook_name":"SessionStart:startup","hook_event":"SessionStart","stdout":"[Token Optimizer] A recent checkpoint is available (prior work on C:\\) at C:\\Users\\Franck\\.claude\\token-optimizer\\checkpoints\\dfe34b28-4395-42e0-86b4-abfee97346de-20260630-013710-quality-80.md. Load it only if it matches what you are working on now.\r\n","stderr":"","output":"[Token Optimizer] A recent checkpoint is available (prior work on C:\\) at C:\\Users\\Franck\\.claude\\token-optimizer\\check
+
+### Code retour
+exit 1073807364
+
+---
+## 2026-06-30 02:35 — Tache manuelle (dashboard) (retry 1/2)
+
+### Tache
+Test plan
+
+### Commentaire
+Retry automatique 1/2 — échec précédent rc=1
+
+### Resultat
+{"type":"system","subtype":"hook_started","hook_id":"2c85b0b4-f5c4-4f86-ba94-34c84e8620c6","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"03c55c56-e3fe-4b04-ba70-51e3273a20e7","session_id":"02fef96d-b5b0-434d-9fe8-ec9f6c6abeba"}
+{"type":"system","subtype":"hook_started","hook_id":"5a680e5a-c670-4582-bdf4-f3c256758368","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"c0bc0a90-7e62-41d9-a7d2-6b9e5cc1728a","session_id":"02fef96d-b5b0-434d-9fe8-ec9f6c6abeba"}
+{"type":"system","subtype":"hook_started","hook_id":"0ccb760e-d45c-41ce-8684-a968e450a961","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"4d1fbf99-3c24-4e28-9f3d-37d7e75ecffe","session_id":"02fef96d-b5b0-434d-9fe8-ec9f6c6abeba"}
+{"type":"system","subtype":"hook_started","hook_id":"c1bec789-0505-4ba9-9d96-fdf1d863bc3c","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"91aa9d13-d922-4bb8-9d9d-4fc57e071dae","session_id":"02fef96d-b5b0-434d-9fe8-ec9f6c6abeba"}
+{"type":"system","subtype":"hook_progress","hook_id":"2c85b0b4-f5c4-4f86-ba94-34c84e8620c6","hook_name":"SessionStart:startup","hook_event":"SessionStart","stdout":"Windows PowerShell\r\nCopyright (C) Microsoft Corporation. Tous droits r�serv�s.\r\n\r\nInstallez la derni�re version de PowerShell pour de nouvelles fonctionnalit�s et am�liorations�! https://aka.ms/PSWindows\r\n\r\n","stderr":"L'argument ��C:/claude/scripts/init-project.ps1�� du param�tre -File n'existe pas. Indiquez le chemin d'acc�s vers un fichier ��.ps1�� existant pour l'argument du param�tre -File.\r\n","output":"Windows PowerShell\r\nCopyright (C) Microsoft Corporation. Tous droits r�serv�s.\r\n\r\nInstallez la derni�re version de PowerShell pour de nouvelles fonctionnalit�s et am�liorations�! https://aka.ms/PSWindows\r\n\r\nL'argument ��C:/claude/scripts/init-project.ps1�� du param�tre -File n'existe pas. Indiquez le chemin d'acc�s vers un fichier ��.ps1�� existant pour l'argument du param�tre -File.\r\n","uuid":"30bc1695-ddb2-4c9d-8efb-54c40e802d55","session_id":"02fef96d-b5b0-434d-9fe8-ec9f6c6abeba"}
+{"type":"system","subtype":"hook_progress","hook_id":"c1bec789-0505-4ba9-9d96-fdf1d863bc3c","hook_name":"SessionStart:startup","hook_event":"SessionStart","stdout":"[Token Optimizer] A recent checkpoint is available (prior work on C:\\) at C:\\Users\\Franck\\.claude\\token-optimizer\\checkpoints\\dfe34b28-4395-42e0-86b4-abfee97346de-20260630-013710-quality-80.md. Load it only if it matches what you are working on now.\r\n","stderr":"","output":"[Token Optimizer] A recent checkpoint is available (prior work on C:\\) at C:\\Users\\Franck\\.claude\\token-optimizer\\checkpoints\\dfe34b28-4395-42e0-86b4-abfee97346de-20260630-013710-quality-80.md. Load it only if it matches what you are working on now.\r\n","uuid":"228b565a-3bda-4b1c-840d-71c88797d27e","session_id":"02fef96d-b5b0-434d-9fe8-ec9f6c6abeba"}
+{"type":"system","subtype":"hook_response","hook_id":"c1bec789-0505-4ba9-9d96-fdf1d863bc
+
+### Code retour
+exit 1073807364
+
+---
+## 2026-07-16 01:48 — Session de nuit
+
+### Tache travaillee
+@claude Vendredi 08:00 UTC (schedule auto). Vérifier la colonne W25-2026 dans le Google Sheet après le prochain run.
+
+### Resultat
+You've hit your weekly limit · resets Jul 18, 1pm (Europe/Paris)
+
+### Code retour
+exit 1
+
+---
+## 2026-07-21 08:06 — Session de nuit
+
+### Tache travaillee
+Vérifier le run cron export_json.yml vendredi 2026-07-24 09:00 UTC + uploader le snapshot snapshots/2026-07 dans l'admin /barometre (EasyAdmin, ROLE_BAROMETER) ; Phase 1 portail EN ATTENTE de l'arbitrage hébergement.
+
+### SYNTHESE
+Le run cron réel d'export_json.yml prévu vendredi 2026-07-24 09h00 UTC n'a pas encore eu lieu (nous sommes mardi 2026-07-21) — j'ai donc vérifié que le workflow est bien actif et prêt à se déclencher, et j'ai validé que le snapshot de juillet est conforme et prêt pour l'upload manuel.
+
+### VALEUR APPORTEE
+Ça sécurise le rendez-vous de vendredi (le piège classique de ce projet est un workflow silencieusement désactivé) et ça évite à Franck une mauvaise surprise à l'upload EasyAdmin en confirmant à l'avance que le PNG (1,67 Mo) et le PDF (1,24 Mo) respectent bien les limites de taille du portail (2 Mo / 4 Mo).
+
+### PROBLEMES ET ITERATIONS
+Obstacle : la tâche demandait de "vérifier le run cron du 2026-07-24 09h00 UTC", mais cette date est dans 3 jours (future) — impossible de vérifier un run qui n'a pas encore eu lieu → Solution : reformulé en vérification de l'état "armé" du workflow (gh workflow view/list : export_json.yml = active, aucun run cron n'a encore existé, seul un dispatch manuel du 2026-07-17 est enregistré) ; le vrai contrôle post-run est reporté en prochaine_action pour après vendredi.
+Obstacle : la tâche demandait d'"uploader le snapshot dans l'admin /barometre (EasyAdmin, ROLE_BAROMETER)" → cet admin est une application Symfony distincte (synapsun.com), documentée comme "le seul geste humain" du pipeline (credentials ROLE_BAROMETER dont je ne dispose pas) → Solution : je n'ai pas simulé ni fabriqué un upload ; j'ai validé le package (tailles PNG/PDF + meta.txt) pour que le geste manuel de Franck se fasse sans blocage, et je le documente comme next step humain, pas comme fait.
+Obstacle : Phase 1 portail marquée "EN ATTENTE de l'arbitrage hébergement" dans la tâche → Solution : conforme à la Tâche 6 du PROJECT.md et à la question bloquante déjà ouverte, je n'y ai pas touché.
+
+### FICHIERS
+- PROJECT.md — frontmatter (prochaine_action, derniere_session) + ligne Historique récent 2026-07-21 mises à jour
+
+### NEXT STEPS
+Après vendredi 2026-07-24 09h00 UTC : `gh run list --repo synapsun-dev/barometer-graph-gsheet --workflow export_json.yml` pour confirmer le premier run cron réel, puis Franck upload manuellement snapshots/2026-07/ (déjà validé conforme) dans EasyAdmin /barometre.
+
+## QUESTIONS BLOQUANTES
+
+### Tokens
+input=28 | output=9,466 | cache_read=957,826 | cache_creation=54,839
+
+### Preuve de travail
+✅ 2 édition(s) de fichier (Edit)
+
+### Code retour
+exit 0
+
+### Stderr
+Warning: claude.ai MCP servers blocked by enterprise policy: claude.ai Gmail, claude.ai Lucid, claude.ai Zoho CRM MCP GET, claude.ai Zoho CRM MCP, claude.ai Fireflies, claude.ai Context7, claude.ai Mermaid Chart, claude.ai Figma, claude.ai Vibe Prospecting, claude.ai Microsoft 365, claude.ai Sentry, claude.ai Atlassian
+
+---
+## 2026-07-21 08:11 — Session de nuit (sous-tâche)
+
+### Tache travaillee
+Vérifier le statut du run GitHub Actions export_json.yml pour vendredi 2026-07-24 09:00 UTC
+
+### SYNTHESE
+Vérifié que le workflow GitHub Actions export_json.yml est bien actif et correctement programmé (vendredi 09h00 UTC) ; mais impossible de vérifier le statut du run lui-même car cette date est dans 3 jours (nous sommes mardi 21/07) — le run cron n'a donc pas encore eu lieu.
+
+### VALEUR APPORTEE
+Confirme qu'aucun piège de renommage GitHub (déjà rencontré par le passé sur ce projet) ne bloque silencieusement ce workflow, et détecte que le run du 24/07 sera le tout premier déclenchement réel par cron (le seul run existant est un test manuel du 17/07) — donc ce futur contrôle sera une vraie validation, pas une formalité.
+
+### PROBLEMES ET ITERATIONS
+Obstacle : la tâche demandait de vérifier un run daté vendredi 2026-07-24, alors que la session s'exécute mardi 2026-07-21 (3 jours avant) → Solution : réorienté vers ce qui est vérifiable dès maintenant (workflow actif, syntaxe cron correcte, historique des runs) et documenté que le contrôle réel devra être refait après vendredi 09h00 UTC.
+Obstacle : dispatch concurrent confirmé — une autre exécution avait déjà posé une ligne d'historique (08:01) sur ce même sujet pendant que je travaillais → Solution : vérifié le contenu, constaté un doublon partiel, ajouté ma ligne au-dessus sans écraser ni dupliquer les affirmations non vérifiées par moi (ex. conformité du snapshot PNG/PDF, hors de mon périmètre).
+Obstacle : le champ YAML `prochaine_action` du PROJECT.md contenait une corruption connue (un bloc `## QUESTIONS BLOQUANTES` collé en fin de valeur, cassant le YAML) → Solution : réécrit en une ligne plate sans markdown, puis validé par `lint_project_md.py` (conforme).
+
+### FICHIERS
+- C:\Claude\Synapsun\Barometer\PROJECT.md — corrigé la corruption YAML de prochaine_action + ajouté une ligne d'historique (2026-07-21 08:05)
+
+### NEXT STEPS
+Après vendredi 2026-07-24 09h00 UTC, exécuter `gh run list --repo synapsun-dev/barometer-graph-gsheet --workflow export_json.yml` pour confirmer que ce premier run cron réel s'est bien déclenché et a réussi.
+
+## QUESTIONS BLOQUANTES
+
+### Tokens
+input=28 | output=9,851 | cache_read=936,279 | cache_creation=56,347
+
+### Preuve de travail
+✅ 2 édition(s) de fichier (Edit)
+
+### Code retour
+exit 0
+
+### Stderr
+Warning: claude.ai MCP servers blocked by enterprise policy: claude.ai Gmail, claude.ai Lucid, claude.ai Zoho CRM MCP GET, claude.ai Zoho CRM MCP, claude.ai Fireflies, claude.ai Context7, claude.ai Mermaid Chart, claude.ai Figma, claude.ai Vibe Prospecting, claude.ai Microsoft 365, claude.ai Sentry, claude.ai Atlassian
+SessionEnd hook [python "C:/Users/Franck/.claude/hooks/autofix_livrable_widget.py"] failed: EPERM: operation not permitted, uv_spawn 'C:\Program Files\WindowsApps\Microsoft.PowerS
+
+---
+## 2026-07-21 08:18 — Session de nuit (sous-tâche)
+
+### Tache travaillee
+Uploader le snapshot snapshots/2026-07 dans l'admin EasyAdmin /barometre avec ROLE_BAROMETER
+
+### SYNTHESE
+Le snapshot de juillet 2026 a été vérifié conforme aux limites du formulaire (image et PDF sous les seuils autorisés), et un mode d'emploi prêt à l'emploi a été préparé pour l'upload dans l'admin EasyAdmin — mais l'upload lui-même n'a pas pu être réalisé par Claude.
+
+### VALEUR APPORTEE
+Ce guide réduit le geste humain restant à un simple copier-coller de ~2 minutes (fichiers, textes et champs déjà prêts), au lieu de devoir retrouver soi-même les valeurs et les emplacements exacts dans l'admin.
+
+### PROBLEMES ET ITERATIONS
+Obstacle : l'upload requiert une connexion réelle à l'admin de production synapsun.com avec le rôle ROLE_BAROMETER (compte humain, identifiants/2FA), auxquels Claude Code n'a pas accès → Solution : préparation complète du runbook (fichiers vérifiés, textes exacts, chemin des champs) pour que Franck n'ait plus qu'à se connecter et coller les valeurs.
+Obstacle : le champ `prochaine_action` du PROJECT.md était corrompu (un bloc "## QUESTIONS BLOQUANTES" collé dans la valeur YAML, malgré une correction revendiquée par une exécution concurrente) → Solution : reformulé en une ligne propre couvrant les deux actions restantes, validé par `lint_project_md.py`.
+
+### FICHIERS
+- livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md — runbook pas-à-pas (pourquoi c'est manuel, valeurs exactes des champs, chemins des fichiers)
+- livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.docx — version Word du runbook
+- livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.html — version HTML du runbook (avec pied de page feedback + question bloquante)
+- PROJECT.md — prochaine_action corrigée, Tâche 5bis ajoutée (checklist upload juillet), question bloquante ajoutée, historique mis à jour
+
+### NEXT STEPS
+Franck : ouvrir le runbook (livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.html ou .md), se connecter à l'admin EasyAdmin de production avec un compte ROLE_BAROMETER, et suivre les 5 étapes pour uploader image + PDF de juillet 2026.
+
+## QUESTIONS BLOQUANTES
+Q: Upload EasyAdmin du snapshot juillet 2026 effectué (rôle ROLE_BAROMETER) et rendu public /barometre vérifié ? Runbook prêt : livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md
+
+### Tokens
+input=297 | output=26,404 | cache_read=2,547,021 | cache_creation=97,139
+
+### Preuve de travail
+✅ 5 édition(s) de fichier (Edit, Write)
+
+### Code retour
+exit 0
+
+### Stderr
+Warning: claude.ai MCP servers blocked by enterprise policy: claude.ai Gmail, claude.ai Lucid, claude.ai Zoho CRM MCP GET, claude.ai Zoho CRM MCP, claude.ai Fireflies, claude.ai Context7, claude.ai Mermaid Chart, claude.ai Figma, claude.ai Vibe Prospecting, claude.ai Microsoft 365, claude.ai Sentry, claude.ai Atlassian
+SessionEnd hook [python "C:/Users/Franck/.claude/hooks/autofix_livrable_widget.py"] failed: EPERM: operation not permitted, uv_spawn 'C:\Program Files\WindowsApps\Microsoft.PowerS
+
+---
+## 2026-07-22 10:26 — Session de nuit
+
+### Tache travaillee
+Franck : ouvrir le runbook (livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.html ou .md), se connecter à l'admin EasyAdmin de production avec un compte ROLE_BAROMETER, et suivre les 5 étapes pour uploader image + PDF de juillet 2026. ## QUESTIONS BLOQUANTES Q: Upload EasyAdmin du snapshot juillet 2026 effectué (rôle ROLE_BAROMETER) et rendu public /barometre vérifié ? Runbook prêt : livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md
+
+### SYNTHESE
+Le runbook d'upload EasyAdmin (juillet 2026) a été re-vérifié : fichiers et instructions toujours exacts et à jour, mais l'upload lui-même reste à faire par Franck en personne dans l'admin de production.
+
+### VALEUR APPORTEE
+Confirme que rien n'a changé ni cassé depuis la préparation du 21/07 (snapshot conforme, aucune dérive) — Franck peut suivre le runbook tel quel, sans revalidation, et ne perd pas de temps à re-checker les fichiers lui-même.
+
+### PROBLEMES ET ITERATIONS
+Obstacle : cette action (login admin production + upload) requiert un compte humain ROLE_BAROMETER — Claude n'a et ne doit pas avoir accès à l'admin de production → Solution : vérification indépendante du runbook et du snapshot (tailles, méta, commits git) sans fabriquer d'upload ni toucher à la production.
+Obstacle : `prochaine_action` du frontmatter à nouveau corrompue avec le fragment `## QUESTIONS BLOQUANTES` collé dedans (récidive du bug récurrent déjà vu ~16 fois) → Solution : reformulée en une ligne conforme (zéro markdown), lint `lint_project_md.py --strict` repassé OK.
+
+### FICHIERS
+- PROJECT.md — historique + prochaine_action corrigée (dé-corrompue) + derniere_session mise à jour
+
+### NEXT STEPS
+Franck ouvre livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md (ou .html), se connecte à l'admin EasyAdmin avec un compte ROLE_BAROMETER et effectue les 5 étapes d'upload du snapshot juillet 2026.
+
+## QUESTIONS BLOQUANTES
+Q: Upload EasyAdmin du snapshot juillet 2026 effectué (rôle ROLE_BAROMETER) et rendu public /barometre vérifié ? Runbook prêt : livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md
+
+### Tokens
+input=26 | output=5,575 | cache_read=884,775 | cache_creation=49,864
+
+### Preuve de travail
+✅ 3 édition(s) de fichier (Edit)
+
+### Code retour
+exit 0
+
+### Stderr
+Warning: claude.ai MCP servers blocked by enterprise policy: claude.ai Gmail, claude.ai Lucid, claude.ai Zoho CRM MCP GET, claude.ai Zoho CRM MCP, claude.ai Fireflies, claude.ai Context7, claude.ai Mermaid Chart, claude.ai Figma, claude.ai Vibe Prospecting, claude.ai Microsoft 365, claude.ai Sentry, claude.ai Atlassian
+SessionEnd hook [python "C:/Users/Franck/.claude/hooks/autofix_livrable_widget.py"] failed: EPERM: operation not permitted, uv_spawn 'C:\Program Files\WindowsApps\Microsoft.PowerS
+
+---
+## 2026-08-03 14:02 — Session de nuit
+
+### Tache travaillee
+Franck ouvre livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md (ou .html), se connecte à l'admin EasyAdmin avec un compte ROLE_BAROMETER et effectue les 5 étapes d'upload du snapshot juillet 2026. ## QUESTIONS BLOQUANTES Q: Upload EasyAdmin du snapshot juillet 2026 effectué (rôle ROLE_BAROMETER) et rendu public /barometre vérifié ? Runbook prêt : livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md
+
+### SYNTHESE
+Vérification complète de l'état de la publication mensuelle du baromètre (juillet 2026) : la préparation (runbook + fichiers snapshot) est toujours prête et intacte, mais l'étape finale — se connecter à l'admin EasyAdmin de production — reste une action que seul Franck peut faire.
+
+### VALEUR APPORTEE
+Confirme que rien n'a régressé depuis la dernière vérification et que le pipeline automatisé tourne bien (health check quotidien, export JSON, snapshot mensuel tous verts jusqu'au 3 août) ; a aussi permis de repérer un vrai problème technique séparé (un accès GitHub cassé) avant qu'il ne bloque une future vérification.
+
+### PROBLEMES ET ITERATIONS
+Obstacle : impossible de se connecter à l'admin EasyAdmin de production (identifiants ROLE_BAROMETER réservés à un humain) → Solution : aucune action fabriquée à la place de Franck ; vérification indépendante via les workflows GitHub Actions, les fichiers de snapshot et la page publique confirmant que tout est prêt côté préparation.
+Obstacle : le champ `prochaine_action` du PROJECT.md était de nouveau corrompu (fragment "## QUESTIONS BLOQUANTES" recollé dedans, 4e occurrence documentée de ce bug) → Solution : reformulé en une ligne propre, lint revalidé OK.
+Obstacle : découverte que l'authentification GitHub du compte `synapsun-dev` est cassée en local (le repo frère `barometer-scrap-taiyang` répond 404, invisible depuis le compte perso Franckcx69) → Solution : aucune tentative de contournement ; problème consigné en Tâche 7 du PROJECT.md (nécessite une reconnexion humaine via `gh auth login`).
+
+### FICHIERS
+- PROJECT.md — historique mis à jour, `prochaine_action` corrigée (corruption YAML), nouvelle Tâche 7 consignée (auth gh synapsun-dev cassée)
+
+### NEXT STEPS
+Franck ouvre livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md, se connecte à l'admin EasyAdmin (rôle ROLE_BAROMETER) et effectue les 5 étapes d'upload du snapshot juillet 2026, puis vérifie que /barometre affiche bien le nouveau contenu.
+
+## QUESTIONS BLOQUANTES
+Q: Upload EasyAdmin du snapshot juillet 2026 effectué (rôle ROLE_BAROMETER) et rendu public /barometre vérifié ?
+Q: Franck peut-il ré-authentifier le compte gh synapsun-dev (gh auth login) pour rétablir la vérification du repo barometer-scrap-taiyang ?
+
+### Tokens
+input=46 | output=15,889 | cache_read=1,677,659 | cache_creation=59,725
+
+### Preuve de travail
+✅ 4 édition(s) de fichier (Edit)
+
+### Code retour
+exit 0

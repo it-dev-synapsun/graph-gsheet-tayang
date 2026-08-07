@@ -1,4 +1,4 @@
 {
-  "timestamp": "2026-06-24T20:10:21",
-  "text": "**Lundi 29 juin 2026 08:00 UTC** : vérifier le scraper cron pour W26-2026 (ou fallback W25-2026). Une fois TaiyangNews publie W25-2026, exécuter `python pv-price-scraper/fix_missing_weeks.py --start-week 25 --start-year 2026` pour backfiller.\n\n## QUESTIONS BLOQUANTES\n\nQ: Credential manager Windows b"
+  "timestamp": "2026-08-03T14:02:35",
+  "text": "Franck ouvre livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md, se connecte à l'admin EasyAdmin (rôle ROLE_BAROMETER) et effectue les 5 étapes d'upload du snapshot juillet 2026, puis vérifie que /barometre affiche bien le nouveau contenu.\n\n## QUESTIONS BLOQUANTES\nQ: Upload EasyAdmin du snapsho"
 }

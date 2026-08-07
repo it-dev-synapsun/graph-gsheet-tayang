@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barometer — Adaptations pour l'intégration dans synapsun.com</title>
+<style>
+:root { --bleu:#3a4d8f; --orange:#e8833a; --vert:#2e7d32; --rouge:#c62828; --gris:#f5f6fa; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Segoe UI',system-ui,-apple-system,sans-serif; color:#2a2a2a; line-height:1.6; background:#fff; }
+.container { max-width:1100px; margin:0 auto; padding:0 24px; }
+header.hero { background:linear-gradient(135deg,var(--bleu) 0%,#25336b 100%); color:#fff; padding:48px 0 40px; }
+header.hero h1 { font-size:1.9em; font-weight:700; margin-bottom:10px; }
+header.hero p.sub { opacity:.85; max-width:820px; }
+header.hero .badge { display:inline-block; background:var(--orange); color:#fff; border-radius:20px; padding:3px 14px; font-size:.8em; font-weight:600; margin-bottom:14px; letter-spacing:.5px; }
+main { padding:36px 0 20px; }
+h2 { color:var(--bleu); font-size:1.45em; margin:38px 0 14px; padding-bottom:8px; border-bottom:3px solid var(--orange); }
+h3 { color:#25336b; font-size:1.12em; margin:26px 0 10px; }
+p { margin:10px 0; }
+ul, ol { margin:10px 0 10px 26px; }
+li { margin:5px 0; }
+code { background:#eef0f7; border-radius:4px; padding:1px 6px; font-size:.88em; font-family:Consolas,'Courier New',monospace; color:#25336b; }
+pre { background:#1e2433; color:#dce3f5; border-radius:8px; padding:16px 18px; overflow-x:auto; font-size:.85em; line-height:1.5; margin:14px 0; }
+pre code { background:none; color:inherit; padding:0; }
+table { width:100%; border-collapse:collapse; margin:16px 0; font-size:.93em; }
+th { background:var(--bleu); color:#fff; text-align:left; padding:10px 12px; }
+td { padding:9px 12px; border-bottom:1px solid #e3e6ef; vertical-align:top; }
+tr:nth-child(even) td { background:var(--gris); }
+.tablewrap { overflow-x:auto; }
+.card { border:1px solid #e3e6ef; border-left:5px solid var(--orange); border-radius:8px; padding:16px 20px; margin:16px 0; background:#fffdf9; }
+.card.reco { border-left-color:var(--vert); background:#f6fbf6; }
+.card.alerte { border-left-color:var(--rouge); background:#fdf6f6; }
+.card h4 { margin-bottom:6px; color:#25336b; }
+.phase { display:inline-block; border-radius:4px; padding:1px 8px; font-size:.78em; font-weight:700; color:#fff; }
+.phase.p0 { background:var(--vert); }
+.phase.p1 { background:var(--orange); }
+.phase.p2 { background:var(--bleu); }
+.kicker { text-transform:uppercase; letter-spacing:1px; font-size:.78em; color:var(--orange); font-weight:700; }
+footer { color:#777; font-size:.85em; padding:26px 0; border-top:1px solid #e3e6ef; margin-top:40px; }
+.feedback-widget { background:#f9f9f9; border-top:2px solid var(--bleu); padding:30px 40px; margin-top:40px; }
+.feedback-container { display:flex; flex-direction:column; gap:15px; max-width:1100px; margin:0 auto; }
+.feedback-container label { font-weight:600; color:#333; }
+.feedback-textarea { width:100%; min-height:100px; padding:12px; border:2px solid #ddd; border-radius:6px; font-family:inherit; font-size:.95em; resize:vertical; }
+.feedback-textarea:focus { outline:none; border-color:var(--bleu); }
+.feedback-btn { align-self:flex-start; padding:10px 24px; background:var(--bleu); color:#fff; border:none; border-radius:6px; font-weight:600; cursor:pointer; }
+.feedback-btn:hover { background:#31437f; }
+.feedback-status { padding:12px; border-radius:6px; display:none; font-weight:500; }
+.feedback-status.success { display:block; background:#e8f5e9; color:#2e7d32; border-left:4px solid #4caf50; }
+.feedback-status.error { display:block; background:#ffebee; color:#c62828; border-left:4px solid #f44336; }
+.feedback-mode-selector { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.feedback-mode-option { display:flex; align-items:center; gap:4px; }
+.feedback-mode-hint { font-size:.8em; color:#777; }
+@media (max-width:700px){ header.hero h1{font-size:1.4em;} .container{padding:0 14px;} }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <span class="badge">ANALYSE · 2026-07-17</span>
+    <h1>Barometer — Adaptations pour une intégration fluide dans synapsun.com</h1>
+    <p class="sub">Croisement du pipeline Barometer (scraper TaiyangNews → Google Sheets → dashboards GitHub Pages) avec le fonctionnement réel du portail <code>synapsun/portal</code> (routes, entité Barometer, conventions Symfony/Stimulus, mode de livraison « code + specs »).</p>
+  </div>
+</header>
+
+<main class="container">
+
+<h2>1. État des lieux — les deux mondes à réconcilier</h2>
+
+<h3>Ce que le portail possède déjà</h3>
+<div class="tablewrap"><table>
+<tr><th>Élément</th><th>Détail</th></tr>
+<tr><td>Page publique</td><td><code>front_barometer</code> — routes <code>fr: /barometre</code> · <code>en: /barometer</code>, <strong>dans le sitemap</strong>, meta SEO dédiées</td></tr>
+<tr><td>Contenu actuel</td><td>Entité <code>Barometer</code> : <strong>1 image (≤ 2 Mo) + 1 PDF (≤ 4 Mo) par période mensuelle</strong> (VichUploader), meta title/keywords/description, date</td></tr>
+<tr><td>Publication</td><td><strong>Manuelle</strong> — upload image + PDF chaque mois via EasyAdmin (rôle <code>ROLE_BAROMETER</code>)</td></tr>
+<tr><td>Leads</td><td><code>ZohoLeadApiWriter</code> (Lead_Source = portal.synapsun.com) + workflow rules Zoho « Portal - New Lead » actives ; domaine Newsletter existant qui mentionne déjà le baromètre</td></tr>
+<tr><td>Lien Zoho</td><td><strong>Aucun</strong> pour l'entité Barometer (pas de module CRM)</td></tr>
+<tr><td>Conventions</td><td>Twig + Bootstrap 5 + <strong>Stimulus (Turbo désactivé)</strong>, Webpack Encore, i18n Loco (zéro texte en dur), contrôleurs single-action, ViewModels, feature flags, tests</td></tr>
+<tr><td>Livraison</td><td><strong>« code + specs » uniquement</strong> — aucun push dans <code>synapsun/portal</code> ; remise au prestataire (Jira D26 → PR vers <code>dev</code>)</td></tr>
+</table></div>
+
+<h3>Ce que le pipeline Barometer produit aujourd'hui</h3>
+<div class="tablewrap"><table>
+<tr><th>Élément</th><th>Détail</th></tr>
+<tr><td>Pipeline</td><td>Scraper TaiyangNews → Claude Vision → Google Sheets ; GitHub Actions vendredi 08:00 UTC + health check quotidien</td></tr>
+<tr><td>Rendu</td><td>Dashboard HTML monolithique (~86 Ko, JS/CSS inline) sur GitHub Pages</td></tr>
+<tr><td>Dépendances <strong>côté navigateur</strong></td><td>CSV gviz Google Sheets · sheets.googleapis v4 · API BCE (FX) · open.er-api.com · currency-api jsdelivr/pages.dev (argent XAG) · <strong>2 iframes Zoho Analytics</strong> · Chart.js CDN · flagcdn.com</td></tr>
+<tr><td>i18n</td><td>Toggle FR/EN maison en JS, textes en dur</td></tr>
+<tr><td>SEO</td><td>Canonicals orientés synapsun.com… mais vers des <strong>URLs inexistantes</strong> (<code>/fr/barometre-prix-modules-photovoltaiques</code> — la route réelle est <code>/barometre</code>)</td></tr>
+</table></div>
+
+<div class="card reco">
+<h4>Diagnostic en une phrase</h4>
+<p>Le portail a déjà <strong>la page, la route SEO, l'admin, le rôle et le canal leads</strong> ; le pipeline Barometer a déjà <strong>les données fraîches et l'automatisation</strong>. Il manque entre les deux : un <strong>contrat de données stable</strong>, un front <strong>conforme aux conventions du portail</strong>, et la suppression des <strong>dépendances tierces côté client</strong> (CSP, RGPD, fiabilité).</p>
+</div>
+
+<h2>2. <span class="phase p0">PHASE 0</span> Adaptations immédiates — dans Barometer, sans toucher au portail</h2>
+<p>Quatre chantiers entièrement réalisables dans le repo Barometer, qui gardent leur valeur quel que soit l'arbitrage hébergement.</p>
+
+<h3>2.1 Contrat de données JSON versionné — la pièce maîtresse</h3>
+<p>Le portail ne doit <strong>jamais</strong> parser le CSV gviz Google (format non contractuel, quota, dépendance frontale à Google). Ajouter au run hebdo un export publié sur GitHub Pages, ex. <code>data/barometer.json</code> :</p>
+<pre><code>{
+  "schema_version": 1,
+  "generated_at": "2026-07-17T08:12:00Z",
+  "last_week": "W28-2026",
+  "fx": { "usd_eur": 0.86, "cny_eur": 0.12, "xag_usd_oz": 38.2, "fixed_at": "2026-07-17" },
+  "market_comment": { "fr": null, "en": null },
+  "categories": [ { "name": "Module", "products": [
+    { "name": "TOPCon Module", "unit": "USD/W", "show_in_barometer": true,
+      "series": [ { "week": "W27-2026", "value": 0.087 } ],
+      "wow_change_pct": -1.1, "trend_4w": "down" } ] } ]
+}</code></pre>
+<ul>
+<li>Nouveau script <code>export_json.py</code> + step dans <code>pv_price_weekly.yml</code>.</li>
+<li><strong>FX et prix de l'argent figés à la génération</strong> → permet de supprimer les 4 appels d'APIs tierces du navigateur (§3.3).</li>
+<li><code>schema_version</code> obligatoire ; champ <code>market_comment</code> FR/EN prévu dès maintenant (vide) pour le Lot 1 de la roadmap v2.</li>
+</ul>
+
+<h3>2.2 Génération automatique image + PDF au format admin du portail</h3>
+<p>Le « court terme zéro dev portail » : rendu headless (Playwright dans le runner Actions) → <strong>PNG ≤ 2 Mo + PDF ≤ 4 Mo</strong> (contraintes exactes de l'entité <code>Barometer</code>) + meta title/description proposées, au dernier run du mois. L'humain <code>ROLE_BAROMETER</code> ne fait plus que valider l'upload EasyAdmin.</p>
+
+<h3>2.3 Correction des canonicals / SEO</h3>
+<div class="card alerte">
+<h4>Anomalie constatée</h4>
+<p>Les canonicals et hreflang du dashboard pointent vers des pages qui n'existent pas sur synapsun.com — les signaux SEO émis depuis GitHub Pages tombent sur des 404.</p>
+</div>
+<ul>
+<li><strong>Option simple (recommandée)</strong> : aligner sur les routes réelles <code>https://synapsun.com/barometre</code> · <code>https://synapsun.com/barometer</code>.</li>
+<li>Option ambitieuse : spec de renommage de route côté prestataire (URLs longues descriptives + redirections 301) — seulement si la valeur SEO du slug long est jugée décisive.</li>
+</ul>
+
+<h3>2.4 Basculer le dashboard GitHub Pages sur le JSON</h3>
+<p>Le dashboard consomme son propre <code>barometer.json</code> (CSV gviz en fallback). Il devient le <strong>client de référence du contrat de données</strong> — il le valide chaque semaine — puis servira de préversion une fois la page portail en place.</p>
+
+<h2>3. <span class="phase p1">PHASE 1</span> Refonte « portail-compatible » du front — si arbitrage = portail</h2>
+<div class="card">
+<h4>EN ATTENTE de l'arbitrage hébergement</h4>
+<p>Question bloquante déjà posée dans <code>synapsun_com</code>. Recommandation maintenue : <strong>portail</strong> (SEO sur le domaine, leads natifs, page/rôle/admin existants). Livraison au format <strong>« code + specs »</strong>, ticket Jira D26, jamais de push direct.</p>
+</div>
+
+<h3>3.1 Exploser le monolithe HTML selon les conventions du portail</h3>
+<div class="tablewrap"><table>
+<tr><th>Aujourd'hui (Barometer)</th><th>Cible (portail)</th></tr>
+<tr><td>1 fichier HTML 86 Ko, JS/CSS inline</td><td>Template <code>templates/visitor/barometer/show.html.twig</code> étendant <code>visitor/layout.html.twig</code></td></tr>
+<tr><td>JS inline</td><td>Contrôleurs <strong>Stimulus</strong> <code>assets/controllers/barometer_*.js</code> (Turbo désactivé)</td></tr>
+<tr><td>CSS inline</td><td><code>assets/scss/components/_barometer.scss</code> importé dans <code>main.scss</code></td></tr>
+<tr><td>Chart.js CDN jsdelivr</td><td><strong>Chart.js via npm/Webpack Encore</strong> — pas de CDN (CSP, audit A-M6)</td></tr>
+<tr><td>Toggle FR/EN maison</td><td>Routes i18n par paths + clés <strong>Loco</strong> <code>page.barometer.*</code> — zéro texte en dur, hreflang automatique</td></tr>
+</table></div>
+<p>Architecture : contrôleur single-action + ViewModel <code>final readonly</code>, sous <code>src/Business/Barometer/</code> (pattern <code>Business/Sales/</code>) ou refonte encadrée du legacy <code>Domain/Barometer</code>. L'entité actuelle (image + PDF) <strong>reste</strong> pour l'historique et le PDF téléchargeable.</p>
+
+<h3>3.2 Acheminement des données : pull (recommandé) ou push</h3>
+<div class="tablewrap"><table>
+<tr><th>Option</th><th>Mécanisme</th><th>Adaptation Barometer</th><th>Avis</th></tr>
+<tr><td><strong>(a) Pull — cron</strong></td><td>Commande <code>app:import:barometer</code> lisant le JSON GitHub Pages, upsert en base, Sentry Monitor</td><td>Aucune (le JSON Phase 0 suffit)</td><td><strong>Recommandé</strong> : zéro secret partagé, résilient</td></tr>
+<tr><td>(b) Push — webhook</td><td><code>POST /api/webhook/barometer-update</code> en fin de run (pattern upsert async, token)</td><td>Step supplémentaire dans <code>pv_price_weekly.yml</code> + secret GitHub ↔ env portail</td><td>Fraîcheur immédiate mais secret + couplage en plus</td></tr>
+</table></div>
+<p>Dans les deux cas : la page ne fait <strong>aucun appel externe au moment de la visite</strong>.</p>
+
+<h3>3.3 Supprimer les dépendances tierces côté navigateur</h3>
+<div class="tablewrap"><table>
+<tr><th>Dépendance actuelle</th><th>Traitement</th></tr>
+<tr><td>CSV gviz + sheets.googleapis</td><td>Remplacés par le JSON importé côté serveur</td></tr>
+<tr><td>API BCE, open.er-api, currency-api</td><td>Valeurs <strong>figées dans le JSON</strong> hebdo ; cours « live » éventuel = proxy serveur avec cache</td></tr>
+<tr><td>flagcdn.com</td><td>Assets locaux (ou toggle natif du layout, qui rend le composant inutile)</td></tr>
+<tr><td>Chart.js CDN</td><td>Bundle Encore local</td></tr>
+<tr><td><strong>2 iframes Zoho Analytics</strong></td><td>Graphes Chart.js natifs alimentés par le même JSON ; à défaut (transitoire) lazy-load + fallback — cookies tiers/CSP/RGPD en font un candidat prioritaire à la suppression</td></tr>
+</table></div>
+
+<h3>3.4 Filet de sécurité et déploiement progressif</h3>
+<ul>
+<li><strong>Feature flag <code>barometer_v2</code></strong> — activation progressive ; rollback = désactiver le flag.</li>
+<li>Fallback : JSON absent/périmé → dernier contenu image + PDF (<code>barometer_missing.html.twig</code> existe déjà).</li>
+<li>Livrable conforme au guide : tests Application (<code>data-test-id</code>), clés Loco FR/EN, schéma d'entité, cron + Sentry Monitor, plan de rollback.</li>
+</ul>
+
+<h2>4. <span class="phase p2">PHASE 2</span> Réaligner la roadmap v2 sur le portail</h2>
+<div class="tablewrap"><table>
+<tr><th>Item roadmap v2</th><th>Réalignement</th></tr>
+<tr><td><strong>Abonnement email hebdo</strong> (Lot 1)</td><td>Pas de formulaire maison sur GitHub Pages → formulaire sur la page portail, canal <code>ZohoLeadApiWriter</code> existant (workflow rules « Portal - New Lead » actives, restriction UE comprise). L'envoi hebdo consomme la liste Zoho — pas de liste parallèle</td></tr>
+<tr><td><strong>Commentaire de marché auto</strong> (Lot 1)</td><td>Généré FR + EN par le pipeline → champ <code>market_comment</code> du JSON → affiché en tête de page portail = contenu frais SEO sur synapsun.com</td></tr>
+<tr><td><strong>Alertes prix internes</strong> (Lot 1)</td><td>Restent 100 % dans le pipeline (<code>health_check.py</code>)</td></tr>
+<tr><td><strong>Simulateur DDP</strong> (Lot 2)</td><td>Contrôleur Stimulus dédié ; briques FOB/fret/FX via le JSON ; CTA → lead Zoho (visiteur potentiellement connecté et identifié)</td></tr>
+<tr><td><strong>Annotations d'événements</strong> (Lot 2)</td><td>Onglet Sheet dédié → section <code>annotations</code> du JSON</td></tr>
+<tr><td><strong>Export PNG/CSV + permaliens</strong> (Lot 3)</td><td>Export en Stimulus ; permaliens = query params sur <code>/barometre</code></td></tr>
+<tr><td><strong>Vue interne spot vs négocié</strong> (Lot 3)</td><td>Pas sur la page publique → page <strong>connectée</strong> <code>ROLE_SYNAPSUN</code> (checklist B du guide)</td></tr>
+<tr><td><strong>Health check</strong></td><td>Après bascule : vérifier la fraîcheur de la <strong>page portail</strong> (lag <code>last_week</code> JSON vs affichage)</td></tr>
+</table></div>
+
+<h2>5. Récapitulatif des impacts fichier par fichier (repo Barometer)</h2>
+<div class="tablewrap"><table>
+<tr><th>Fichier</th><th>Adaptation</th><th>Phase</th></tr>
+<tr><td><code>export_json.py</code> (nouveau)</td><td>Contrat <code>barometer.json</code> (schema_version, FX/XAG figés, market_comment)</td><td><span class="phase p0">0</span></td></tr>
+<tr><td><code>pv_price_weekly.yml</code></td><td>+ step export JSON ; + step rendu image/PDF fin de mois ; (+ webhook si push)</td><td><span class="phase p0">0</span></td></tr>
+<tr><td><code>render_snapshot.py</code> (nouveau)</td><td>Playwright → PNG ≤ 2 Mo + PDF ≤ 4 Mo + meta proposées</td><td><span class="phase p0">0</span></td></tr>
+<tr><td><code>livrables/barometre-synapsun.html</code></td><td>Canonicals/hreflang → <code>/barometre</code> · <code>/barometer</code> ; consommation JSON (CSV fallback)</td><td><span class="phase p0">0</span></td></tr>
+<tr><td><code>health_check.py</code></td><td>+ check fraîcheur JSON ; plus tard + check page portail</td><td><span class="phase p0">0</span>→<span class="phase p2">2</span></td></tr>
+<tr><td>Livrable « code + specs » (projet <code>synapsun_com</code>)</td><td>Page Twig/Stimulus/SCSS + import cron + tests + spec</td><td><span class="phase p1">1</span></td></tr>
+<tr><td>Roadmap v2 (PROJECT.md)</td><td>Lot 1 « email hebdo » repointé sur le canal leads du portail</td><td><span class="phase p2">2</span></td></tr>
+</table></div>
+
+<h2>6. Décisions à trancher (gouvernance)</h2>
+<ol>
+<li><strong>Arbitrage hébergement</strong> (question bloquante déjà posée dans <code>synapsun_com</code>) : page interactive sur le portail (recommandé) vs GitHub Pages avec lien. La Phase 1 en dépend ; la Phase 0 non.</li>
+<li><strong>Pull vs push</strong> pour les données (§3.2) — recommandation : (a) cron pull.</li>
+<li><strong>Iframes Zoho Analytics</strong> : remplacement natif (recommandé) vs maintien transitoire lazy-load.</li>
+<li><strong>Slug SEO</strong> : conserver <code>/barometre</code> (simple) vs renommage en URL longue + 301 (spec prestataire supplémentaire).</li>
+</ol>
+
+</main>
+
+<footer>
+  <div class="container">
+  Analyse réalisée le 2026-07-17 par Claude Code (projet <code>Synapsun/Barometer</code>) — sources : cartographie <code>synapsun_com/docs/ARCHITECTURE_SYNAPSUN_COM.md</code>, fiche <code>INTEGRATION_PROJETS.md</code> §1, guide <code>GUIDE_DEV_INTEGRATION.md</code>, clone lecture seule <code>synapsun/portal</code> (routes et entité Barometer vérifiées). Document jumeau : <code>docs/ADAPTATIONS_INTEGRATION_SYNAPSUN_COM.md</code>.
+  </div>
+</footer>
+
+<div class="feedback-widget" id="feedback-widget" data-project="Synapsun/Barometer">
+  <div class="feedback-container">
+    <label for="feedback-text">💬 Feedback sur ce livrable</label>
+    <textarea id="feedback-text" class="feedback-textarea" placeholder="Avez-vous des questions ? Manque-t-il des informations ? Suggérez une amélioration..."></textarea>
+    <div class="feedback-mode-selector">
+      <span class="feedback-mode-label">⚙️ Mode :</span>
+      <div class="feedback-mode-option">
+        <input type="radio" id="feedback-mode-queue" name="feedback-mode" value="queue" checked>
+        <label for="feedback-mode-queue">⏳ Queue (nightly)</label>
+        <span class="feedback-mode-hint">Tâche pour le prochain nightly runner</span>
+      </div>
+      <div class="feedback-mode-option">
+        <input type="radio" id="feedback-mode-immediate" name="feedback-mode" value="immediate">
+        <label for="feedback-mode-immediate">⚡ Immédiat</label>
+        <span class="feedback-mode-hint">Traité maintenant (~30 min)</span>
+      </div>
+    </div>
+    <button id="feedback-submit" class="feedback-btn">📤 Envoyer le feedback</button>
+    <div id="feedback-status" class="feedback-status"></div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const submitBtn = document.getElementById('feedback-submit');
+  const feedbackText = document.getElementById('feedback-text');
+  const feedbackStatus = document.getElementById('feedback-status');
+  const feedbackWidget = document.getElementById('feedback-widget');
+  const project = feedbackWidget.getAttribute('data-project');
+
+  submitBtn.addEventListener('click', async function() {
+    const text = feedbackText.value.trim();
+    if (!text) {
+      feedbackStatus.textContent = '⚠️ Veuillez entrer un feedback.';
+      feedbackStatus.classList.add('error');
+      feedbackStatus.classList.remove('success');
+      return;
+    }
+    try {
+      const payload = {
+        project: project,
+        mode: document.querySelector('input[name="feedback-mode"]:checked').value,
+        livrable: 'ADAPTATIONS_INTEGRATION_SYNAPSUN_COM.html',
+        text: text,
+        user_agent: navigator.userAgent,
+        url: window.location.href,
+        timestamp: new Date().toISOString()
+      };
+      const response = await fetch('http://127.0.0.1:8765/api/feedback/' + project, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (response.ok) {
+        feedbackStatus.textContent = '✅ Feedback envoyé avec succès !';
+        feedbackStatus.classList.add('success');
+        feedbackStatus.classList.remove('error');
+        feedbackText.value = '';
+      } else {
+        throw new Error('HTTP ' + response.status);
+      }
+    } catch (err) {
+      feedbackStatus.textContent = '❌ Erreur d\'envoi (serveur feedback local éteint ?) — ' + err.message;
+      feedbackStatus.classList.add('error');
+      feedbackStatus.classList.remove('success');
+    }
+  });
+});
+</script>
+
+</body>
+</html>

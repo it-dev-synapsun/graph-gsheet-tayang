@@ -1,0 +1,926 @@
+<!-- feedback-exempt: prototype de page portail (workflow BRIEF_PACK_SYNAPSUN, niveau 1) destiné à la conversion Twig — pas un rapport/analyse. Le feedback se donne sur le livrable ANALYSE_DESIGN_SYSTEM_BAROMETER.html. -->
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Baromètre des prix des modules photovoltaïques - Synapsun</title>
+
+    <!-- SEO : FICHE_PAGE_BAROMETRE.md §6 — converti en meta_title/meta_desc Twig à l'intégration.
+         Route existante front_barometer (fr /barometre · en /barometer), déjà dans le sitemap.
+         Canonical + hreflang : automatiques via common/layout.html.twig (paths FR/EN déclarés). -->
+    <meta name="description" content="Suivez chaque semaine les prix du polysilicium, des wafers, cellules, modules et du verre solaire. Données TaiyangNews analysées par les experts Synapsun."/>
+
+    <link rel="stylesheet" href="assets/portal.css">
+
+    <!--
+        Kit Font Awesome hébergé (identique à la prod). Question B1 du QUESTIONNAIRE_CADRAGE_IT.md :
+        réutilisation confirmée en attente de retour IT (hypothèse par défaut = oui, usage interne).
+    -->
+    <script src="https://kit.fontawesome.com/b8505dcd93.js" crossorigin="anonymous"></script>
+</head>
+<body class="container-fluid g-5">
+
+<!-- ============================================================ -->
+<!-- HEADER RÉEL (templates/common/layout/_header.html.twig)      -->
+<!-- Liens neutralisés en #route:nom_route — convertis en path()  -->
+<!-- à l'intégration (doc 06_CONVERSION_TWIG.md).                 -->
+<!-- ============================================================ -->
+<header class="header">
+    <nav class="navbar navbar-expand-xxl py-0">
+        <div class="navbar-block navbar-block--main container-fluid align-items-stretch px-0">
+            <a href="#route:home" class="navbar-content ps-3">
+                <img src="assets/img/logo.svg" class="logo" alt="Synapsun">
+            </a>
+            <!-- Desktop main menu (masqué sous 1440px — voir 03_LAYOUTS_GABARITS.md §9) -->
+            <div class="navbar-content navbar-collapse collapse d-none d-xxl-flex">
+                <ul class="navbar-nav ms-auto mb-2 mb-xxl-0">
+                    <li class="nav-item nav-item--direct-link">
+                        <a href="#route:catalog_syn_range_index" class="nav-link overflow-hidden">
+                            <i class="fa-light fa-solar-panel text-primary"></i>
+                            Modules PV
+                        </a>
+                    </li>
+                    <li class="nav-item nav-item--direct-link">
+                        <a href="#route:catalog_inverter_syn_range_index" class="nav-link overflow-hidden">
+                            <i class="fa-kit fa-inverter text-primary"></i>
+                            Onduleurs
+                        </a>
+                    </li>
+                    <li class="nav-item nav-item--direct-link">
+                        <a href="#route:catalog_battery_syn_range_index" class="nav-link overflow-hidden">
+                            <i class="fa-light fa-battery-bolt text-primary"></i>
+                            Batteries
+                            <div class="new-ribbon">New</div>
+                        </a>
+                    </li>
+                    <li class="nav-item nav-item--direct-link">
+                        <a href="#route:repowering_form" class="nav-link overflow-hidden">
+                            <i class="fa-light fa-kit fa-repowering text-primary"></i>
+                            Repowering
+                        </a>
+                    </li>
+                    <li class="nav-item nav-item--direct-link">
+                        <a href="#route:sourcing_tools" class="nav-link overflow-hidden">
+                            <i class="fa-light fa-magnifying-glass-waveform text-primary"></i>
+                            Outils de sourcing
+                        </a>
+                    </li>
+
+                    <li class="nav-item nav-item--dropdown dropdown-toggle">
+                        <div class="nav-link">Notre offre</div>
+                        <div class="nav-list">
+                            <ul class="nav-list__group">
+                                <li class="nav-list__item">
+                                    <a href="#route:repowering_revamping_offer" class="nav-list__link">
+                                        <i class="fa-light fa-kit fa-repowering"></i> Repowering
+                                    </a>
+                                </li>
+                                <li class="nav-list__item">
+                                    <a href="#route:agrivoltaism_offer" class="nav-list__link">
+                                        <i class="fa-light fa-farm"></i> Agrivoltaïsme
+                                    </a>
+                                </li>
+                                <li class="nav-list__item">
+                                    <a href="#route:training" class="nav-list__link">
+                                        <i class="fa-light fa-graduation-cap"></i> Formation
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-item--dropdown dropdown-toggle">
+                        <div class="nav-link">SYNAPSUN</div>
+                        <div class="nav-list">
+                            <ul class="nav-list__group">
+                                <li class="nav-list__item"><a href="#route:front_who_are_we" class="nav-list__link"><i class="fa-light fa-people-group"></i> Qui sommes-nous ?</a></li>
+                                <li class="nav-list__item"><a href="#route:paqs" class="nav-list__link"><i class="fa-light fa-badge-check"></i> Nos engagements qualité</a></li>
+                                <li class="nav-list__item"><a href="#route:manufacturer_index" class="nav-list__link"><i class="fa-light fa-industry-windows"></i> Partenaires industriels</a></li>
+                                <li class="nav-list__item"><a href="#route:front_references" class="nav-list__link"><i class="fa-light fa-excavator"></i> Références</a></li>
+                                <li class="nav-list__item"><a href="#" target="_blank" class="nav-list__link"><i class="fa-light fa-users-medical"></i> Nous rejoindre</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-item--dropdown dropdown-toggle">
+                        <div class="nav-link">Ressources</div>
+                        <div class="nav-list">
+                            <ul class="nav-list__group">
+                                <li class="nav-list__item"><a href="#route:blog" class="nav-list__link"><i class="fa-light fa-newspaper"></i> Actualités &amp; analyses</a></li>
+                                <li class="nav-list__item"><a href="#route:faq" class="nav-list__link"><i class="fa-light fa-books"></i> Base de connaissances</a></li>
+                                <!-- NOUVELLE ENTRÉE DE MENU PROPOSÉE (FICHE §1) — à ajouter via MenuNavigationExtension::getMenuMain(), jamais le template -->
+                                <li class="nav-list__item"><a href="#route:front_barometer" class="nav-list__link" data-i18n="menu.barometer"><i class="fa-light fa-chart-line"></i> Baromètre des prix</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navbar-block navbar-block--icons">
+            <div class="navbar-content">
+                <button type="button" class="d-flex d-xxl-none nav-link btn-icon navbar-toggler" data-component="mobile-menu">
+                    <i class="fa-light fa-bars fs-2"></i>
+                </button>
+                <ul class="navbar-nav d-none d-xxl-flex ms-auto mb-2 mb-xxl-0">
+                    <li class="nav-item">
+                        <a href="#route:contact" data-tippy title="Nous contacter" class="nav-link btn-icon">
+                            <i class="fa-light fa-phone"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#route:customer_deal_prepare" data-tippy title="Demander un devis" class="nav-link btn-icon">
+                            <i class="fa-light fa-file-signature"></i>
+                        </a>
+                    </li>
+                    <!-- data-auth="public" : icône connexion visible seulement si non connecté -->
+                    <li class="nav-item border-start border-gray-300 dropdown" data-auth="public">
+                        <a href="#route:user_security_login" data-tippy title="Se connecter" class="nav-link btn-icon">
+                            <i class="fa-light fa-user icon-pulse-primary fs-2"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navbar-block navbar-block--icons navbar-block--localization d-none d-xxl-flex">
+            <div class="navbar-content">
+                <ul class="navbar-nav">
+                    <li class="nav-item nav-item--dropdown dropdown-toggle">
+                        <div class="nav-link btn-icon px-2">
+                            <img src="assets/img/flag_fr.svg" alt="Français" class="border border-gray-200 w-80">
+                        </div>
+                        <div class="nav-list">
+                            <ul class="nav-list__group">
+                                <li class="nav-list__header border-bottom">Langue</li>
+                                <li class="nav-list__item"><a href="#route:_locale_fr" class="nav-list__link active">Français</a></li>
+                                <li class="nav-list__item"><a href="#route:_locale_en" class="nav-list__link">English</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- ============================================================ -->
+<!-- BREADCRUMB (composant 02_COMPOSANTS.md — dernier item = page -->
+<!-- courante, jamais en lien)                                     -->
+<!-- ============================================================ -->
+<nav aria-label="breadcrumb" class="d-flex mb-2 gap-3">
+    <a href="#route:home" class="btn-secondary fs-6 w-auto"><i class="fa-regular fa-chevron-left"></i></a>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#route:home" class="btn-link" data-i18n="common.breadcrumb.home">Accueil</a></li>
+        <li class="breadcrumb-item"><span data-i18n="page.barometer.breadcrumb.label">Baromètre des prix</span></li>
+    </ol>
+</nav>
+
+<!-- ============================================================ -->
+<!-- CONTENU — page publique (data-auth="public"), pattern        -->
+<!-- dashboard (03_LAYOUTS_GABARITS.md §7.F), dataviz pattern 7.  -->
+<!-- ============================================================ -->
+<main class="content" data-auth="public">
+
+    <h1 data-i18n="page.barometer.header.title">Baromètre des prix des modules photovoltaïques</h1>
+
+    <p class="lead" data-i18n="page.barometer.header.lead">
+        De la matière première au module : suivi hebdomadaire des prix de toute la chaîne de valeur
+        du panneau solaire — polysilicium, wafers, cellules, modules et verre — par les experts Synapsun.
+    </p>
+
+    <!-- Fraîcheur des données (valeurs = données du ViewModel, pas des traductions) -->
+    <div class="d-flex flex-wrap gap-3 align-items-center mb-5" data-test-id="freshness-bar">
+        <span class="badge-secondary fw-medium" data-test-id="last-week">
+            <i class="fa-light fa-calendar-week"></i>
+            <span data-i18n="page.barometer.header.week.label">Semaine</span>&nbsp;W28-2026
+        </span>
+        <span class="badge-gray-light" data-test-id="data-source">
+            <span data-i18n="page.barometer.header.source.label">Source</span>&nbsp;: TaiyangNews
+        </span>
+        <span class="badge-gray-light" data-test-id="fx-fixed-date">
+            <span data-i18n="page.barometer.header.fx_date.label">Taux de change figés au</span>&nbsp;17/07/2026
+        </span>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- KPI — chiffres clés (stat tiles, valeurs rendues côté    -->
+    <!-- serveur par le ViewModel en production)                   -->
+    <!-- ======================================================== -->
+    <section>
+        <div class="section__header">
+            <div class="section__title">
+                <h2 class="h2" data-i18n="page.barometer.kpi.title">Chiffres clés de la semaine</h2>
+            </div>
+        </div>
+        <div class="section__content">
+            <div class="row g-5">
+                <div class="col-12 col-sm-6 col-lg-4 col-xxl-2 d-flex">
+                    <div class="card w-100" data-test-id="kpi-polysilicon">
+                        <div class="fs-5 text-gray-600 text-uppercase fw-medium" data-i18n="page.barometer.kpi.polysilicon.label">Polysilicium n-type</div>
+                        <div class="fs-1 fw-medium text-secondary mt-2">33,7&nbsp;<span class="fs-5 text-gray-600 fw-normal">RMB/kg</span></div>
+                        <div class="fs-5 text-gray-600 mt-2"><i class="fa-light fa-minus"></i> 0,0&nbsp;% <span class="text-gray-500" data-i18n="page.barometer.kpi.wow.suffix">vs S-1</span></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 col-xxl-2 d-flex">
+                    <div class="card w-100" data-test-id="kpi-wafer">
+                        <div class="fs-5 text-gray-600 text-uppercase fw-medium" data-i18n="page.barometer.kpi.wafer.label">Wafer n-type 210&nbsp;mm</div>
+                        <div class="fs-1 fw-medium text-secondary mt-2">0,95&nbsp;<span class="fs-5 text-gray-600 fw-normal">RMB/pièce</span></div>
+                        <div class="fs-5 text-gray-600 mt-2"><i class="fa-light fa-arrow-trend-down"></i> −3,1&nbsp;% <span class="text-gray-500" data-i18n="page.barometer.kpi.wow.suffix">vs S-1</span></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 col-xxl-2 d-flex">
+                    <div class="card w-100" data-test-id="kpi-cell">
+                        <div class="fs-5 text-gray-600 text-uppercase fw-medium" data-i18n="page.barometer.kpi.cell.label">Cellule TOPCon 182&nbsp;mm</div>
+                        <div class="fs-1 fw-medium text-secondary mt-2">0,27&nbsp;<span class="fs-5 text-gray-600 fw-normal">RMB/W</span></div>
+                        <div class="fs-5 text-gray-600 mt-2"><i class="fa-light fa-minus"></i> 0,0&nbsp;% <span class="text-gray-500" data-i18n="page.barometer.kpi.wow.suffix">vs S-1</span></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 col-xxl-2 d-flex">
+                    <div class="card w-100" data-test-id="kpi-module">
+                        <div class="fs-5 text-gray-600 text-uppercase fw-medium" data-i18n="page.barometer.kpi.module.label">Module TOPCon bifacial</div>
+                        <div class="fs-1 fw-medium text-secondary mt-2">0,68&nbsp;<span class="fs-5 text-gray-600 fw-normal">RMB/W</span></div>
+                        <div class="fs-5 text-gray-600 mt-2"><i class="fa-light fa-arrow-trend-down"></i> −2,9&nbsp;% <span class="text-gray-500" data-i18n="page.barometer.kpi.wow.suffix">vs S-1</span></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 col-xxl-2 d-flex">
+                    <div class="card w-100" data-test-id="kpi-glass">
+                        <div class="fs-5 text-gray-600 text-uppercase fw-medium" data-i18n="page.barometer.kpi.glass.label">Verre solaire 2,0&nbsp;mm</div>
+                        <div class="fs-1 fw-medium text-secondary mt-2">11,5&nbsp;<span class="fs-5 text-gray-600 fw-normal">RMB/m²</span></div>
+                        <div class="fs-5 text-gray-600 mt-2"><i class="fa-light fa-minus"></i> 0,0&nbsp;% <span class="text-gray-500" data-i18n="page.barometer.kpi.wow.suffix">vs S-1</span></div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 col-xxl-2 d-flex">
+                    <div class="card w-100" data-test-id="kpi-eurusd">
+                        <div class="fs-5 text-gray-600 text-uppercase fw-medium">EUR / USD</div>
+                        <div class="fs-1 fw-medium text-secondary mt-2">1,1435</div>
+                        <div class="fs-5 text-gray-600 mt-2"><span data-i18n="page.barometer.kpi.fx.note">Taux figé du vendredi</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- L'ANALYSE SYNAPSUN — commentaire de marché                -->
+    <!-- (champ market_comment du JSON — CONTENU SIMULÉ ci-dessous.-->
+    <!-- Bloc entièrement masqué quand market_comment est null,    -->
+    <!-- cf. INTEGRATION-NOTES « États vide/erreur ».)             -->
+    <!-- ======================================================== -->
+    <section data-test-id="market-comment" data-simulated="true">
+        <div class="section__header">
+            <div class="section__title">
+                <h2 class="h2" data-i18n="page.barometer.comment.title">L'analyse Synapsun</h2>
+            </div>
+        </div>
+        <div class="section__content">
+            <div class="card">
+                <p class="mb-0">
+                    <i class="fa-light fa-quote-left text-primary fs-2 me-3"></i>
+                    <span data-test-id="market-comment-text">[Contenu simulé — champ <code>market_comment.fr</code> du contrat JSON, rédigé chaque semaine par le pipeline (roadmap Lot&nbsp;1). Exemple&nbsp;: «&nbsp;Semaine 28&nbsp;: le polysilicium poursuit sa décrue entamée mi-juin…&nbsp;»]</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SECTIONS PAR CATÉGORIE — graphique Chart.js + vue tableau -->
+    <!-- (relief d'accessibilité exigé par la skill dataviz).      -->
+    <!-- Conversion : canvas → contrôleur Stimulus « chart » de    -->
+    <!-- @symfony/ux-chartjs (07_PATTERNS_AVANCES.md §7).          -->
+    <!-- ======================================================== -->
+
+    <section id="polysilicium">
+        <div class="section__header">
+            <div class="section__title">
+                <h2 class="h2" data-i18n="page.barometer.section.polysilicon.title">Polysilicium</h2>
+                <div class="section__actions">
+                    <span class="badge-gray-light">RMB/kg</span>
+                </div>
+            </div>
+        </div>
+        <div class="section__content">
+            <div class="row g-5">
+                <div class="col-12 col-xl-8 d-flex">
+                    <div class="card w-100">
+                        <canvas data-barometer-chart="Polysilicon" data-test-id="chart-polysilicon" role="img"
+                                aria-label="Évolution hebdomadaire du prix du polysilicium en RMB par kilogramme depuis 2024, quatre séries de produits"></canvas>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-4 d-flex">
+                    <div class="card w-100 p-0">
+                        <table class="table-compact" data-test-id="table-polysilicon">
+                            <thead>
+                            <tr>
+                                <th data-i18n="page.barometer.table.product.label">Produit</th>
+                                <th>W28-2026</th>
+                                <th data-i18n="page.barometer.table.wow.label">Var. hebdo</th>
+                            </tr>
+                            </thead>
+                            <tbody data-barometer-table="Polysilicon"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="wafers">
+        <div class="section__header">
+            <div class="section__title">
+                <h2 class="h2" data-i18n="page.barometer.section.wafer.title">Wafers</h2>
+                <div class="section__actions">
+                    <span class="badge-gray-light">RMB/pièce</span>
+                </div>
+            </div>
+        </div>
+        <div class="section__content">
+            <div class="row g-5">
+                <div class="col-12 col-xl-8 d-flex">
+                    <div class="card w-100">
+                        <canvas data-barometer-chart="Wafer" data-test-id="chart-wafer" role="img"
+                                aria-label="Évolution hebdomadaire du prix des wafers n-type en RMB par pièce depuis 2024, deux séries"></canvas>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-4 d-flex">
+                    <div class="card w-100 p-0">
+                        <table class="table-compact" data-test-id="table-wafer">
+                            <thead>
+                            <tr>
+                                <th data-i18n="page.barometer.table.product.label">Produit</th>
+                                <th>W28-2026</th>
+                                <th data-i18n="page.barometer.table.wow.label">Var. hebdo</th>
+                            </tr>
+                            </thead>
+                            <tbody data-barometer-table="Wafer"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cellules">
+        <div class="section__header">
+            <div class="section__title">
+                <h2 class="h2" data-i18n="page.barometer.section.cell.title">Cellules</h2>
+                <div class="section__actions">
+                    <span class="badge-gray-light">RMB/W</span>
+                </div>
+            </div>
+        </div>
+        <div class="section__content">
+            <div class="row g-5">
+                <div class="col-12 col-xl-8 d-flex">
+                    <div class="card w-100">
+                        <canvas data-barometer-chart="Cell" data-test-id="chart-cell" role="img"
+                                aria-label="Évolution hebdomadaire du prix des cellules TOPCon en RMB par watt depuis 2024, trois séries"></canvas>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-4 d-flex">
+                    <div class="card w-100 p-0">
+                        <table class="table-compact" data-test-id="table-cell">
+                            <thead>
+                            <tr>
+                                <th data-i18n="page.barometer.table.product.label">Produit</th>
+                                <th>W28-2026</th>
+                                <th data-i18n="page.barometer.table.wow.label">Var. hebdo</th>
+                            </tr>
+                            </thead>
+                            <tbody data-barometer-table="Cell"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="modules">
+        <div class="section__header">
+            <div class="section__title">
+                <h2 class="h2" data-i18n="page.barometer.section.module.title">Modules</h2>
+                <div class="section__actions">
+                    <span class="badge-gray-light">RMB/W</span>
+                </div>
+            </div>
+        </div>
+        <div class="section__content">
+            <div class="row g-5">
+                <div class="col-12 col-xl-8 d-flex">
+                    <div class="card w-100">
+                        <canvas data-barometer-chart="Module" data-test-id="chart-module" role="img"
+                                aria-label="Évolution hebdomadaire du prix des modules TOPCon et HJT en RMB par watt depuis 2024, deux séries"></canvas>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-4 d-flex">
+                    <div class="card w-100 p-0">
+                        <table class="table-compact" data-test-id="table-module">
+                            <thead>
+                            <tr>
+                                <th data-i18n="page.barometer.table.product.label">Produit</th>
+                                <th>W28-2026</th>
+                                <th data-i18n="page.barometer.table.wow.label">Var. hebdo</th>
+                            </tr>
+                            </thead>
+                            <tbody data-barometer-table="Module"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="verre">
+        <div class="section__header">
+            <div class="section__title">
+                <h2 class="h2" data-i18n="page.barometer.section.glass.title">Verre solaire</h2>
+                <div class="section__actions">
+                    <span class="badge-gray-light">RMB/m²</span>
+                </div>
+            </div>
+        </div>
+        <div class="section__content">
+            <div class="row g-5">
+                <div class="col-12 col-xl-8 d-flex">
+                    <div class="card w-100">
+                        <canvas data-barometer-chart="Glass" data-test-id="chart-glass" role="img"
+                                aria-label="Évolution hebdomadaire du prix du verre solaire en RMB par mètre carré depuis 2024, deux séries"></canvas>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-4 d-flex">
+                    <div class="card w-100 p-0">
+                        <table class="table-compact" data-test-id="table-glass">
+                            <thead>
+                            <tr>
+                                <th data-i18n="page.barometer.table.product.label">Produit</th>
+                                <th>W28-2026</th>
+                                <th data-i18n="page.barometer.table.wow.label">Var. hebdo</th>
+                            </tr>
+                            </thead>
+                            <tbody data-barometer-table="Glass"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAUX DE CHANGE & ARGENT — valeurs FIGÉES à la génération  -->
+    <!-- du JSON : AUCUN appel d'API tierce depuis le navigateur   -->
+    <!-- du visiteur (règle intégration portail, CSP/RGPD).        -->
+    <!-- ======================================================== -->
+    <section id="taux-de-change">
+        <div class="section__header">
+            <div class="section__title">
+                <h2 class="h2" data-i18n="page.barometer.fx.title">Taux de change &amp; argent</h2>
+            </div>
+        </div>
+        <div class="section__content">
+            <div class="row g-5">
+                <div class="col-12 col-md-4 d-flex">
+                    <div class="card w-100" data-test-id="fx-eurusd">
+                        <div class="fs-5 text-gray-600 text-uppercase fw-medium">EUR / USD</div>
+                        <div class="fs-1 fw-medium text-secondary mt-2">1,1435</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 d-flex">
+                    <div class="card w-100" data-test-id="fx-eurcny">
+                        <div class="fs-5 text-gray-600 text-uppercase fw-medium">EUR / CNY</div>
+                        <div class="fs-1 fw-medium text-secondary mt-2">7,7501</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 d-flex">
+                    <div class="card w-100" data-test-id="fx-xag">
+                        <div class="fs-5 text-gray-600 text-uppercase fw-medium" data-i18n="page.barometer.fx.silver.label">Argent (XAG)</div>
+                        <div class="fs-1 fw-medium text-secondary mt-2">55,29&nbsp;<span class="fs-5 text-gray-600 fw-normal">USD/oz</span></div>
+                    </div>
+                </div>
+            </div>
+            <p class="fs-5 text-gray-600 mt-4 mb-0" data-i18n="page.barometer.fx.note">
+                Taux Banque Centrale Européenne et cours de l'argent figés à la génération hebdomadaire du baromètre
+                (source&nbsp;: contrat de données, champ «&nbsp;fx&nbsp;»). L'argent entre dans le coût des busbars des cellules TOPCon.
+            </p>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- ÉDITION MENSUELLE PDF — entité Barometer existante,       -->
+    <!-- route front_barometer_download (document public).         -->
+    <!-- ======================================================== -->
+    <section id="edition-mensuelle">
+        <div class="section__header">
+            <div class="section__title">
+                <h2 class="h2" data-i18n="page.barometer.archive.title">Édition mensuelle PDF</h2>
+            </div>
+        </div>
+        <div class="section__content">
+            <div class="card">
+                <div class="row g-5 align-items-center">
+                    <div class="col-12 col-lg-8">
+                        <p class="mb-0" data-i18n="page.barometer.archive.text">
+                            Chaque mois, Synapsun publie une synthèse du baromètre au format PDF&nbsp;:
+                            l'instantané des prix, prêt à partager avec vos équipes.
+                        </p>
+                    </div>
+                    <div class="col-12 col-lg-4 text-lg-end">
+                        <a href="#route:front_barometer_download" class="btn-outline-secondary" data-test-id="download-pdf">
+                            <i class="fa-light fa-file-pdf"></i>
+                            <span data-i18n="page.barometer.archive.cta.label">Télécharger le PDF</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- MÉTHODOLOGIE & SOURCES                                    -->
+    <!-- ======================================================== -->
+    <section id="methodologie">
+        <div class="section__header">
+            <div class="section__title">
+                <h2 class="h2" data-i18n="page.barometer.methodology.title">Méthodologie &amp; sources</h2>
+            </div>
+        </div>
+        <div class="section__content">
+            <ul class="list-icons">
+                <li class="mb-0">
+                    <i class="fa-light fa-database text-secondary-lighter w-30p"></i>
+                    <span data-i18n="page.barometer.methodology.source.text">Prix relevés chaque semaine auprès de TaiyangNews, référence du secteur pour les prix spot de la chaîne de valeur PV en Chine.</span>
+                </li>
+                <li class="mb-0">
+                    <i class="fa-light fa-rotate text-secondary-lighter w-30p"></i>
+                    <span data-i18n="page.barometer.methodology.freshness.text">Actualisation automatisée chaque vendredi ; la semaine de référence affichée est la dernière publication disponible.</span>
+                </li>
+                <li class="mb-0">
+                    <i class="fa-light fa-euro-sign text-secondary-lighter w-30p"></i>
+                    <span data-i18n="page.barometer.methodology.fx.text">Taux de change BCE et cours de l'argent figés à la date de génération, indiquée en tête de page.</span>
+                </li>
+                <li class="mb-0">
+                    <i class="fa-light fa-triangle-exclamation text-secondary-lighter w-30p"></i>
+                    <span data-i18n="page.barometer.methodology.disclaimer.text">Ces données sont générées automatiquement et peuvent contenir des erreurs&nbsp;: elles sont fournies à titre indicatif et ne constituent pas une offre de prix.</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- CTA CONTACT                                               -->
+    <!-- ======================================================== -->
+    <section id="contact-cta">
+        <div class="section__content">
+            <div class="card text-center">
+                <h2 class="fw-light mb-3" data-i18n="page.barometer.cta.title">Vous souhaitez discuter du marché avec nos experts&nbsp;?</h2>
+                <p data-i18n="page.barometer.cta.text">
+                    Nos spécialistes modules PV vous accompagnent dans vos projets d'achat et de sourcing.
+                </p>
+                <div>
+                    <a href="#route:contact" class="btn-primary" data-test-id="cta-contact">
+                        <i class="fa-light fa-phone"></i>
+                        <span data-i18n="page.barometer.cta.button.label">Nous contacter</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- ============================================================ -->
+<!-- FOOTER RÉEL (templates/common/layout/_footer.html.twig)      -->
+<!-- ============================================================ -->
+<footer class="footer">
+    <div class="py-5 px-4 px-md-8">
+        <div class="row gy-5 gx-8 gx-md-10">
+            <div class="col-12 col-md-5 col-xl-3 d-flex flex-column justify-content-center align-items-center gap-5 text-center order-1">
+                <img src="assets/img/logo_vertical.svg" alt="Synapsun" class="mw-200p">
+                <p>Une question ? Contactez-nous</p>
+                <a href="#route:contact" class="btn-primary">
+                    <i class="fa-light fa-phone"></i> Nous contacter
+                </a>
+            </div>
+            <div class="col-12 col-md-7 col-xl-4 border-start border-white border-md-gray-200 pt-6 pt-md-0 order-3 order-md-2">
+                <div class="row g-7">
+                    <!-- menu_direct_links() — mêmes 5 liens que le header + carte "Espace client" -->
+                    <div class="col-12 col-xxl-6">
+                        <div class="d-flex flex-column gap-3">
+                            <div class="card p-2 shadow-none border h-auto align-items-start">
+                                <a href="#route:catalog_syn_range_index" class="btn-text-secondary fs-5 fw-normal">
+                                    <i class="fa-light fa-solar-panel text-primary"></i> Modules PV
+                                </a>
+                            </div>
+                            <div class="card p-2 shadow-none border h-auto align-items-start">
+                                <a href="#route:catalog_inverter_syn_range_index" class="btn-text-secondary fs-5 fw-normal">
+                                    <i class="fa-kit fa-inverter text-primary"></i> Onduleurs
+                                </a>
+                            </div>
+                            <div class="card p-2 shadow-none border h-auto align-items-start">
+                                <a href="#route:catalog_battery_syn_range_index" class="btn-text-secondary fs-5 fw-normal">
+                                    <i class="fa-light fa-battery-bolt text-primary"></i> Batteries
+                                </a>
+                            </div>
+                            <div class="card p-2 shadow-none border h-auto align-items-start">
+                                <a href="#route:repowering_form" class="btn-text-secondary fs-5 fw-normal">
+                                    <i class="fa-light fa-kit fa-repowering text-primary"></i> Repowering
+                                </a>
+                            </div>
+                            <div class="card p-2 shadow-none border h-auto align-items-start">
+                                <a href="#route:sourcing_tools" class="btn-text-secondary fs-5 fw-normal">
+                                    <i class="fa-light fa-magnifying-glass-waveform text-primary"></i> Outils de sourcing
+                                </a>
+                            </div>
+                            <!-- Libellé réel = "Espace client" (vérifié déconnecté ET connecté sur synapsun.com,
+                                 pas "Connexion"). La route ne change elle-même jamais vers le dashboard : le
+                                 template ne teste que IS_IMPERSONATOR, jamais app.user (_footer.html.twig) —
+                                 un utilisateur déjà connecté qui clique ici est quand même envoyé sur /connexion. -->
+                            <div class="card p-2 shadow-none border h-auto align-items-start">
+                                <a href="#route:user_security_login" class="btn-text-secondary fs-5 fw-normal">
+                                    <i class="fa-light fa-user text-primary"></i> Espace client
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- menu_main() — 3 catégories, mêmes libellés/routes que les dropdowns du header -->
+                    <div class="col-12 col-xxl-6">
+                        <h2 class="h3 fs-4">Notre offre</h2>
+                        <ul class="list-links gap-2">
+                            <li class="fs-5"><a href="#route:repowering_revamping_offer" class="btn-link-secondary">Repowering</a></li>
+                            <li class="fs-5"><a href="#route:agrivoltaism_offer" class="btn-link-secondary">Agrivoltaïsme</a></li>
+                            <li class="fs-5"><a href="#route:training" class="btn-link-secondary">Formation</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-xxl-6">
+                        <h2 class="h3 fs-4">SYNAPSUN</h2>
+                        <ul class="list-links gap-2">
+                            <li class="fs-5"><a href="#route:front_who_are_we" class="btn-link-secondary">Qui sommes-nous ?</a></li>
+                            <li class="fs-5"><a href="#route:paqs" class="btn-link-secondary">Nos engagements qualité</a></li>
+                            <li class="fs-5"><a href="#route:manufacturer_index" class="btn-link-secondary">Partenaires industriels</a></li>
+                            <li class="fs-5"><a href="#route:front_references" class="btn-link-secondary">Références</a></li>
+                            <li class="fs-5"><a href="#" target="_blank" class="btn-link-secondary">Nous rejoindre</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-xxl-6">
+                        <h2 class="h3 fs-4">Ressources</h2>
+                        <ul class="list-links gap-2">
+                            <li class="fs-5"><a href="#route:blog" class="btn-link-secondary">Actualités &amp; analyses</a></li>
+                            <li class="fs-5"><a href="#route:faq" class="btn-link-secondary">Base de connaissances</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md border-start border-white border-xl-gray-200 order-2 order-md-3">
+                <hr class="d-xl-none">
+                <div class="d-flex flex-column align-items-center align-items-xl-start justify-content-center text-center text-xl-start">
+                    <h2 class="fw-light mb-3 d-inline-flex align-items-center">
+                        <i class="fa-light fa-envelope text-primary me-3"></i> Newsletter
+                    </h2>
+                    <p class="fs-3 d-flex gap-3 flex-wrap justify-content-center justify-content-md-start">
+                        Envie d'être tenu au courant ?<br><span>SYNAPSUN vous éclaire !</span>
+                    </p>
+                    <p class="mb-5 fs-4">
+                        Recevez les actualités du secteur et les nouveautés de SYNAPSUN en vous inscrivant à notre liste de diffusion.
+                    </p>
+                    <a href="#route:newsletter_form" class="btn-primary">
+                        S'inscrire <i class="fa-light fa-chevron-right"></i>
+                    </a>
+                    <p class="fs-5 text-gray-500 mt-5">
+                        Vous pouvez vous désabonner à tout moment.
+                    </p>
+                    <div class="d-flex flex-column flex-md-row gap-md-4 align-items-center mt-5">
+                        <span class="fs-5">Retrouvez-nous également sur</span>
+                        <div class="d-flex gap-2">
+                            <a href="#" target="_blank" class="btn-icon">
+                                <img src="assets/img/linkedin.svg" alt="LinkedIn" width="40">
+                            </a>
+                            <a href="#" target="_blank" class="btn-icon">
+                                <img src="assets/img/youtube.svg" alt="Youtube" width="40">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="d-flex justify-content-center justify-content-md-end fs-5 pt-3 pb-5">
+    <a href="#route:mentions_legales" class="btn-link-gray-500 separator-pipe">Mentions légales</a>
+    <span class="text-gray-500">© 2026 Synapsun</span>
+</div>
+
+<!-- =====================================================================
+     PROTOTYPE UNIQUEMENT — logique de graphiques à convertir en
+     contrôleur Stimulus via @symfony/ux-chartjs (data-controller="chart",
+     07_PATTERNS_AVANCES.md §7). Chart.js est chargé ici depuis un CDN
+     pour la démo autonome ; EN PRODUCTION : bundle Webpack Encore local,
+     jamais de CDN (CSP à venir, audit A-M6). Aucun appel réseau de
+     données : tout est embarqué (contrat data/barometer.json W28-2026).
+     Les tableaux sont remplis par JS ici par commodité de prototype ;
+     en production ils sont rendus côté serveur (Twig + ViewModel).
+     ===================================================================== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+// Données réelles W28-2026 — extraites de data/barometer.json (schema_version 1).
+// En production : importées en base par le cron app:import:barometer, servies par le ViewModel.
+const BAROMETER_DATA = {"schema_version":1,"generated_at":"2026-07-17T20:20:59Z","source":"TaiyangNews","last_week":"W28-2026","weeks":["W1-2024","W2-2024","W3-2024","W4-2024","W5-2024","W6-2024","W8-2024","W9-2024","W10-2024","W11-2024","W12-2024","W13-2024","W14-2024","W15-2024","W16-2024","W22-2024","W25-2024","W26-2024","W27-2024","W28-2024","W29-2024","W31-2024","W34-2024","W35-2024","W36-2024","W37-2024","W38-2024","W39-2024","W41-2024","W42-2024","W43-2024","W44-2024","W45-2024","W46-2024","W48-2024","W49-2024","W50-2024","W51-2024","W52-2024","W1-2025","W2-2025","W3-2025","W7-2025","W8-2025","W9-2025","W10-2025","W11-2025","W12-2025","W13-2025","W14-2025","W15-2025","W16-2025","W17-2025","W18-2025","W19-2025","W20-2025","W21-2025","W22-2025","W23-2025","W25-2025","W26-2025","W27-2025","W28-2025","W29-2025","W30-2025","W31-2025","W32-2025","W33-2025","W34-2025","W35-2025","W36-2025","W38-2025","W39-2025","W41-2025","W42-2025","W43-2025","W44-2025","W45-2025","W46-2025","W47-2025","W48-2025","W49-2025","W50-2025","W51-2025","W52-2025","W1-2026","W2-2026","W3-2026","W4-2026","W5-2026","W6-2026","W8-2026","W9-2026","W10-2026","W11-2026","W12-2026","W13-2026","W14-2026","W15-2026","W16-2026","W17-2026","W18-2026","W19-2026","W20-2026","W21-2026","W22-2026","W23-2026","W25-2026","W26-2026","W27-2026","W28-2026"],"fx":{"eur_usd":1.1435,"eur_cny":7.7501,"xag_usd_oz":55.29,"fixed_at":"2026-07-17"},"market_comment":{"fr":null,"en":null},"products":[{"category":"Polysilicon","name":"N-Type Silicon in China","unit":"RMB/kg","values":[null,null,69.5,null,null,null,null,null,null,null,null,null,69.5,null,null,null,37.5,37.5,null,null,38.5,37.5,37.5,37.5,null,38.5,null,null,40.0,40.0,40.0,40.0,40.0,40.0,40.0,40.0,40.0,40.0,40.5,40.5,42.0,42.0,42.0,42.0,42.0,42.0,42.0,42.0,42.0,42.0,42.0,42.0,null,39.5,39.5,39.5,38.5,36.5,36.5,35.5,35.5,35.5,36.0,46.0,46.0,48.0,48.0,48.0,48.0,50.0,50.0,51.0,51.5,52.0,52.5,52.5,52.5,52.5,52.5,52.5,52.5,52.5,52.5,52.5,52.5,52.5,52.5,52.5,52.5,52.5,52.5,52.5,48.0,48.0,43.5,43.5,39.0,36.0,36.0,36.0,36.0,36.0,36.0,35.5,35.0,35.0,34.5,34.0,33.7,33.7,33.7],"latest":{"week":"W28-2026","value":33.7},"wow_change_pct":0.0,"trend_4w":"down"},{"category":"Polysilicon","name":"Reusable Chinese 9N","unit":"RMB/kg","values":[61.0,61.0,61.5,61.5,61.5,61.5,61.5,61.5,61.5,61.5,61.5,60.0,60.0,58.0,55.0,37.0,35.0,35.0,35.0,35.0,null,null,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,33.5,33.5,33.5,33.5,43.0,43.0,43.0,43.0,43.0,43.0,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.5,43.0,43.0,42.5,42.5,36.0,34.0,34.0,34.0,34.0,34.0,34.0,33.5,33.5,33.5,32.0,31.0,31.0,31.0,31.0],"latest":{"week":"W28-2026","value":31.0},"wow_change_pct":0.0,"trend_4w":"down"},{"category":"Polysilicon","name":"Chinese 9N","unit":"RMB/kg","values":[59.5,59.5,59.5,59.5,59.5,59.5,59.5,59.5,59.5,59.5,59.5,58.0,58.0,55.0,52.0,36.0,34.0,34.0,34.0,34.0,34.0,null,34.0,32.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,34.0,32.5,32.5,32.5,32.5,42.0,42.0,42.0,42.0,42.0,42.0,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.5,42.0,42.0,39.9,39.9,35.5,33.0,33.0,33.0,33.0,33.0,33.0,33.0,32.0,32.0,31.0,30.0,30.0,30.0,30.0],"latest":{"week":"W28-2026","value":30.0},"wow_change_pct":0.0,"trend_4w":"down"},{"category":"Polysilicon","name":"FBR Granular Silicon","unit":"RMB/kg","values":[null,null,61.0,null,null,null,null,null,null,null,null,null,55.0,null,null,null,36.5,36.5,null,null,34.0,null,36.5,36.5,null,null,null,null,37.0,37.0,37.0,37.0,37.0,37.0,37.0,37.0,37.0,37.0,37.0,37.0,39.0,39.0,39.0,39.0,39.0,39.0,39.0,39.0,39.0,39.0,39.0,39.0,37.5,37.5,36.5,35.5,35.5,35.5,35.5,34.0,34.0,36.0,34.0,44.0,44.0,45.0,45.0,45.0,45.0,47.0,47.0,49.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,50.0,46.0,46.0,42.5,42.5,38.0,35.0,35.0,35.0,35.0,35.0,35.0,35.0,33.5,33.5,33.5,33.0,33.0,33.0,33.0],"latest":{"week":"W28-2026","value":33.0},"wow_change_pct":0.0,"trend_4w":"down"},{"category":"Wafer","name":"n-type 210mm, 130µm","unit":"RMB/piece","values":[3.23,3.23,3.1,3.1,3.08,3.08,3.08,3.08,3.08,2.95,2.85,2.75,2.65,2.6,2.6,1.85,1.85,1.85,1.85,1.85,null,1.15,1.15,1.85,1.85,1.15,1.5,1.5,1.3,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.45,1.55,1.55,1.55,1.55,1.55,1.55,1.55,1.55,1.55,1.58,1.58,1.55,1.45,1.45,1.4,1.3,1.3,1.3,1.3,1.25,1.23,1.23,1.1,1.2,1.25,1.35,1.35,1.35,1.35,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.33,1.3,1.3,1.25,1.23,1.2,1.2,1.3,1.35,1.35,1.35,1.3,1.28,1.2,1.2,1.17,1.15,1.1,1.1,1.05,1.02,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.98,0.98,0.98,0.98,0.95],"latest":{"week":"W28-2026","value":0.95},"wow_change_pct":-3.06,"trend_4w":"down"},{"category":"Wafer","name":"n-type 182mm, 130µm","unit":"RMB/piece","values":[2.3,2.3,2.3,2.2,2.15,2.15,2.15,2.15,2.08,1.98,1.85,1.7,1.6,1.55,1.55,1.15,1.15,1.15,1.15,1.15,1.15,1.05,1.18,1.3,1.15,null,1.08,1.12,1.12,1.06,1.06,1.06,1.03,1.02,1.02,1.02,1.02,1.05,1.08,1.08,1.18,1.18,1.18,1.18,1.18,1.18,1.2,1.2,1.23,1.28,1.28,1.28,1.15,1.15,1.0,0.98,0.98,0.98,0.98,0.9,0.86,0.86,0.95,1.05,1.1,1.2,1.2,1.2,1.2,1.25,1.25,1.35,1.35,1.35,1.35,1.35,1.35,1.3,1.3,1.3,1.2,1.18,1.18,1.18,1.24,1.25,1.25,1.25,1.25,1.2,1.12,1.12,1.05,1.05,1.0,0.98,0.96,0.92,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.87],"latest":{"week":"W28-2026","value":0.87},"wow_change_pct":-3.33,"trend_4w":"down"},{"category":"Cell","name":"TOPCon - n-type 182mm","unit":"RMB/W","values":[0.48,0.48,0.48,0.48,0.48,0.48,0.48,0.49,0.48,0.48,0.48,0.47,0.46,0.42,0.42,0.3,0.3,0.3,0.3,0.3,0.29,0.32,0.3,0.3,0.29,0.29,0.27,0.27,0.27,0.27,0.27,0.27,0.27,0.27,0.28,0.28,0.28,0.28,0.29,0.29,0.29,0.29,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.28,0.28,0.3,0.27,0.26,0.26,0.26,0.24,0.24,0.23,0.23,0.25,0.28,0.31,0.32,0.3,0.3,0.3,0.3,0.32,0.33,0.33,0.33,0.33,0.33,0.31,0.31,0.31,0.3,0.29,0.29,0.3,0.32,0.37,0.38,0.41,0.44,0.44,0.44,0.44,0.42,0.42,0.4,0.38,0.37,0.36,0.35,0.33,0.33,0.34,0.33,0.33,0.33,0.33,0.31,0.29,0.27,0.27,0.27],"latest":{"week":"W28-2026","value":0.27},"wow_change_pct":0.0,"trend_4w":"down"},{"category":"Module","name":"TOPCon bifacial - n-type, 182mm, 72 cells","unit":"RMB/W","values":[1.02,1.02,1.02,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.86,0.83,0.81,0.81,0.81,0.8,0.78,0.78,0.78,0.76,0.76,0.76,0.75,0.75,0.73,0.73,0.73,0.73,0.71,0.71,0.71,0.71,0.71,0.71,0.71,0.71,0.71,0.69,0.69,0.7,0.7,0.71,0.73,0.75,0.75,0.75,0.72,0.72,0.71,0.7,0.68,0.68,0.67,0.67,0.67,0.67,0.67,0.67,0.68,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.69,0.69,0.69,0.69,0.69,0.69,0.69,0.69,0.68,0.68,0.68,0.68,0.69,0.71,0.74,0.8,0.8,0.8,0.83,0.83,0.82,0.81,0.81,0.78,0.76,0.76,0.75,0.76,0.76,0.76,0.75,0.75,0.75,0.74,0.72,0.71,0.7,0.68],"latest":{"week":"W28-2026","value":0.68},"wow_change_pct":-2.86,"trend_4w":"down"},{"category":"Glass","name":"Solar Glass 3.2 mm","unit":"RMB/m2","values":[28.0,28.0,28.0,28.0,28.0,28.0,28.0,28.0,28.0,25.5,25.5,25.5,25.5,26.0,26.0,26.0,26.0,26.0,26.0,26.0,26.0,25.5,null,25.5,24.0,null,23.0,22.0,22.0,22.0,22.0,22.0,22.0,22.0,null,22.0,21.5,21.5,19.5,19.5,19.5,19.5,19.5,19.5,19.5,20.0,20.0,20.0,23.0,23.5,23.5,23.5,23.5,23.5,23.5,23.0,22.5,22.5,22.5,22.5,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,19.5,19.5,19.5,19.5,19.5,18.5,18.5,18.5,18.5,18.5,18.5,18.5,18.5,18.5,18.5,18.5,18.5],"latest":{"week":"W28-2026","value":18.5},"wow_change_pct":0.0,"trend_4w":"stable"},{"category":"Glass","name":"Solar Glass 2.0mm","unit":"RMB/m2","values":[20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5,15.8,null,null,15.0,null,14.0,13.0,13.0,13.0,13.0,13.0,13.0,13.0,null,13.0,13.0,13.0,12.0,12.0,12.0,12.0,12.0,12.0,12.0,13.0,13.0,13.0,13.5,14.0,14.5,14.5,14.5,14.5,14.5,14.2,14.0,14.0,14.0,14.0,12.0,12.0,12.0,null,null,10.0,null,0.0,20.0,14.0,14.0,14.0,14.0,14.0,14.0,14.0,14.0,14.0,14.0,14.0,14.0,13.5,13.5,13.5,13.5,13.5,13.5,13.5,13.5,13.5,13.5,13.5,13.5,13.5,12.8,12.8,12.8,12.8,12.8,11.5,11.5,11.5,11.5,11.5,11.5,11.5,11.5,11.5,11.5,11.5,11.5],"latest":{"week":"W28-2026","value":11.5},"wow_change_pct":0.0,"trend_4w":"stable"},{"category":"Cell","name":"TOPCon - n-type, 210 mm (Raw)","unit":"RMB/W","values":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.35,0.35,null,null,0.33,null,null,null,null,null,null,null,0.29,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.25,0.26,0.28,0.29,0.29,0.29,0.29,0.29,0.29,0.3,0.3,0.3,0.3,0.31,0.31,0.3,0.3,0.3,0.29,0.29,0.28,0.3,0.32,0.38,0.38,0.41,0.44,0.44,0.44,0.44,0.42,0.42,0.4,0.39,0.37,null,null,0.34,0.34,null,0.34,0.34,0.33,0.33,0.32,0.3,0.28,0.27,0.27],"latest":{"week":"W28-2026","value":0.27},"wow_change_pct":0.0,"trend_4w":"down"},{"category":"Cell","name":"Bifacial, 210Rmm TOPCon Cell (Above 24.3%)","unit":"RMB/W","values":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.29,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.25,0.26,0.28,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.29,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.27,0.29,0.31,0.37,0.38,0.41,0.44,0.44,0.44,0.44,0.42,0.42,0.41,0.39,0.38,0.36,0.36,0.34,0.34,0.34,0.34,0.34,0.33,0.33,0.32,0.29,0.27,0.27,0.27],"latest":{"week":"W28-2026","value":0.27},"wow_change_pct":0.0,"trend_4w":"down"},{"category":"Module","name":"210mm HJT Module (715-730W)","unit":"RMB/W","values":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.85,0.85,0.85,0.83,0.83,0.83,0.83,0.83],"latest":{"week":"W28-2026","value":0.83},"wow_change_pct":0.0,"trend_4w":"stable"}]};
+
+// Palette catégorielle validée (skill dataviz, validateur 6 checks, ordre FIXE, jamais cyclée) :
+// tokens du design system synapsun.com (01_TOKENS.md) — le contraste limite du lagoon (#10b2bd)
+// est compensé par la légende + la vue tableau adjacente (relief exigé par le validateur).
+const SERIES_COLORS = ['#536cc6', '#e27928', '#10b2bd', '#a765de']; // secondary-lighter, primary, lagoon, pink
+const GRID_COLOR   = '#edf0f2';  // --color-gray-200
+const TICK_COLOR   = '#6c757d';  // --color-gray-600
+const FONT_FAMILY  = 'Roboto, sans-serif';
+
+const CATEGORIES = ['Polysilicon', 'Wafer', 'Cell', 'Module', 'Glass'];
+const nfFR = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 2 });
+
+function productsOf(category) {
+    return BAROMETER_DATA.products.filter(p => p.category === category);
+}
+
+// --- Vue tableau (en prod : rendue côté serveur en Twig — classes et clés i18n énumérées
+// en toutes lettres par branche if/elseif, jamais "prefix-{{ variable }}" : piège PurgeCSS, doc 06) ---
+const TREND_HTML = {
+    down:   '<span class="d-block fs-6 text-gray-500"><i class="fa-light fa-arrow-trend-down"></i> <span data-i18n="page.barometer.trend.down.label">Baisse</span></span>',
+    stable: '<span class="d-block fs-6 text-gray-500"><i class="fa-light fa-minus"></i> <span data-i18n="page.barometer.trend.stable.label">Stable</span></span>',
+    up:     '<span class="d-block fs-6 text-gray-500"><i class="fa-light fa-arrow-trend-up"></i> <span data-i18n="page.barometer.trend.up.label">Hausse</span></span>',
+};
+
+document.querySelectorAll('[data-barometer-table]').forEach(tbody => {
+    const cat = tbody.getAttribute('data-barometer-table');
+    productsOf(cat).forEach((p, i) => {
+        const tr = document.createElement('tr');
+        const wow = p.wow_change_pct;
+        const wowTxt = (wow === null || wow === 0) ? '0,0 %'
+            : (wow > 0 ? '+' : '−') + nfFR.format(Math.abs(Math.round(wow * 10) / 10)) + ' %';
+        const trend = p.trend_4w || 'stable';
+        tr.innerHTML =
+            '<td><i class="fa-solid fa-minus" style="color:' + SERIES_COLORS[i] + '" aria-hidden="true"></i> ' +
+            escHtml(p.name) + '</td>' +
+            '<td class="fw-medium text-secondary">' + nfFR.format(p.latest.value) + '</td>' +
+            '<td>' + wowTxt + TREND_HTML[trend] + '</td>';
+        tbody.appendChild(tr);
+    });
+});
+
+function escHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// --- Graphiques (marks : lignes 2px, points invisibles, hover ≥ 5px, tooltip croisé,
+// légende toujours présente, grille/axes en retrait — skill dataviz) ---
+Chart.defaults.font.family = FONT_FAMILY;
+Chart.defaults.font.size = 11;
+Chart.defaults.color = TICK_COLOR;
+
+document.querySelectorAll('[data-barometer-chart]').forEach(canvas => {
+    const cat = canvas.getAttribute('data-barometer-chart');
+    const prods = productsOf(cat);
+    new Chart(canvas, {
+        type: 'line',
+        data: {
+            labels: BAROMETER_DATA.weeks,
+            datasets: prods.map((p, i) => ({
+                label: p.name,
+                data: p.values,
+                borderColor: SERIES_COLORS[i],
+                backgroundColor: SERIES_COLORS[i],
+                borderWidth: 2,
+                pointRadius: 0,
+                pointHoverRadius: 5,
+                pointHitRadius: 12,
+                spanGaps: true,
+                tension: 0.15,
+            })),
+        },
+        options: {
+            responsive: true,
+            aspectRatio: window.innerWidth < 768 ? 1.4 : 2.4,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { usePointStyle: true, pointStyle: 'line', boxHeight: 8, color: '#495057' },
+                },
+                tooltip: {
+                    backgroundColor: '#202e60',
+                    titleFont: { weight: 'bold' },
+                    callbacks: {
+                        label: ctx => ' ' + ctx.dataset.label + ' : ' + nfFR.format(ctx.parsed.y) + ' ' + prods[0].unit,
+                    },
+                },
+            },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: { autoSkip: true, maxTicksLimit: 12, maxRotation: 0 },
+                },
+                y: {
+                    grid: { color: GRID_COLOR },
+                    border: { display: false },
+                    ticks: { callback: v => nfFR.format(v) },
+                },
+            },
+        },
+    });
+});
+</script>
+
+</body>
+</html>
+
+<!-- ============================================================
+TRADUCTIONS (une ligne par data-i18n posé — convention
+{global}.{second}.{internal}.{component}.{atom}, 04_REGLES_TRANSVERSES.md §1)
+| Clé                                             | FR | EN |
+|--------------------------------------------------|----|----|
+| menu.barometer                                   | Baromètre des prix | Price barometer |
+| common.breadcrumb.home                           | Accueil | Home |
+| page.barometer.breadcrumb.label                  | Baromètre des prix | Price barometer |
+| page.barometer.header.title                      | Baromètre des prix des modules photovoltaïques | PV module price barometer |
+| page.barometer.header.lead                       | De la matière première au module : suivi hebdomadaire des prix de toute la chaîne de valeur du panneau solaire — polysilicium, wafers, cellules, modules et verre — par les experts Synapsun. | From raw material to module: weekly price tracking across the entire solar panel value chain — polysilicon, wafers, cells, modules and glass — by Synapsun's experts. |
+| page.barometer.header.week.label                 | Semaine | Week |
+| page.barometer.header.source.label               | Source | Source |
+| page.barometer.header.fx_date.label              | Taux de change figés au | Exchange rates fixed on |
+| page.barometer.kpi.title                         | Chiffres clés de la semaine | Key figures of the week |
+| page.barometer.kpi.polysilicon.label             | Polysilicium n-type | N-type polysilicon |
+| page.barometer.kpi.wafer.label                   | Wafer n-type 210 mm | N-type wafer 210 mm |
+| page.barometer.kpi.cell.label                    | Cellule TOPCon 182 mm | TOPCon cell 182 mm |
+| page.barometer.kpi.module.label                  | Module TOPCon bifacial | TOPCon bifacial module |
+| page.barometer.kpi.glass.label                   | Verre solaire 2,0 mm | Solar glass 2.0 mm |
+| page.barometer.kpi.fx.note                       | Taux figé du vendredi | Friday's fixed rate |
+| page.barometer.kpi.wow.suffix                    | vs S-1 | vs W-1 |
+| page.barometer.comment.title                     | L'analyse Synapsun | Synapsun's analysis |
+| page.barometer.section.polysilicon.title         | Polysilicium | Polysilicon |
+| page.barometer.section.wafer.title               | Wafers | Wafers |
+| page.barometer.section.cell.title                | Cellules | Cells |
+| page.barometer.section.module.title              | Modules | Modules |
+| page.barometer.section.glass.title               | Verre solaire | Solar glass |
+| page.barometer.table.product.label               | Produit | Product |
+| page.barometer.table.wow.label                   | Var. hebdo | WoW change |
+| page.barometer.trend.down.label                  | Baisse | Falling |
+| page.barometer.trend.stable.label                | Stable | Stable |
+| page.barometer.trend.up.label                    | Hausse | Rising |
+| page.barometer.fx.title                          | Taux de change & argent | Exchange rates & silver |
+| page.barometer.fx.silver.label                   | Argent (XAG) | Silver (XAG) |
+| page.barometer.fx.note                           | Taux Banque Centrale Européenne et cours de l'argent figés à la génération hebdomadaire du baromètre (source : contrat de données, champ « fx »). L'argent entre dans le coût des busbars des cellules TOPCon. | European Central Bank rates and silver price fixed at the barometer's weekly generation time (source: data contract, "fx" field). Silver is a key cost driver for TOPCon cell busbars. |
+| page.barometer.archive.title                     | Édition mensuelle PDF | Monthly PDF edition |
+| page.barometer.archive.text                      | Chaque mois, Synapsun publie une synthèse du baromètre au format PDF : l'instantané des prix, prêt à partager avec vos équipes. | Every month, Synapsun publishes a PDF digest of the barometer: a snapshot of prices, ready to share with your teams. |
+| page.barometer.archive.cta.label                 | Télécharger le PDF | Download the PDF |
+| page.barometer.methodology.title                 | Méthodologie & sources | Methodology & sources |
+| page.barometer.methodology.source.text           | Prix relevés chaque semaine auprès de TaiyangNews, référence du secteur pour les prix spot de la chaîne de valeur PV en Chine. | Prices collected weekly from TaiyangNews, the industry reference for spot prices across the PV value chain in China. |
+| page.barometer.methodology.freshness.text        | Actualisation automatisée chaque vendredi ; la semaine de référence affichée est la dernière publication disponible. | Automated refresh every Friday; the reference week shown is the latest available publication. |
+| page.barometer.methodology.fx.text               | Taux de change BCE et cours de l'argent figés à la date de génération, indiquée en tête de page. | ECB exchange rates and silver price fixed at generation date, shown at the top of the page. |
+| page.barometer.methodology.disclaimer.text       | Ces données sont générées automatiquement et peuvent contenir des erreurs : elles sont fournies à titre indicatif et ne constituent pas une offre de prix. | This data is generated automatically and may contain errors: it is provided for information only and does not constitute a price offer. |
+| page.barometer.cta.title                         | Vous souhaitez discuter du marché avec nos experts ? | Want to discuss the market with our experts? |
+| page.barometer.cta.text                          | Nos spécialistes modules PV vous accompagnent dans vos projets d'achat et de sourcing. | Our PV module specialists support you in your purchasing and sourcing projects. |
+| page.barometer.cta.button.label                  | Nous contacter | Contact us |
+NOTE : les noms de produits, unités (RMB/kg…), numéros de semaine (W28-2026) et valeurs
+numériques sont des DONNÉES du contrat JSON, pas des traductions. Le formatage des nombres
+(virgule FR / point EN) relève du ViewModel (Intl/NumberFormatter selon la locale).
+============================================================ -->
+
+<!-- INTEGRATION-NOTES
+Source de données pressentie :
+  - Contrat JSON versionné barometer.json (schema_version 1), produit chaque vendredi ~09:00 UTC
+    par le pipeline GitHub Actions du repo barometer-graph-gsheet (GitHub Pages).
+    Pattern 12 « Ingestion de données externes » (07_PATTERNS_AVANCES.md) — décision Franck
+    2026-07-27 : hébergement portail, pipeline externe = source de vérité (question L1).
+  - Acheminement RECOMMANDÉ : cron pull `app:import:barometer` (cookbook cli/import_command.md),
+    upsert en base, Sentry Monitor comme les autres crons. Alternative : webhook entrant
+    authentifié (modèle WebhookController Zoho) appelé en fin de run Actions.
+  - AUCUN appel externe depuis le navigateur du visiteur : données servies depuis la base
+    (suppression des dépendances actuelles du dashboard GitHub Pages : CSV gviz Google Sheets,
+    sheets.googleapis.com, API BCE, open.er-api.com, currency-api jsdelivr, flagcdn — les taux
+    FX/XAG arrivent FIGÉS dans le JSON).
+  - Chart.js : bundle Webpack Encore via @symfony/ux-chartjs (contrôleur Stimulus « chart »
+    existant) — le <script> CDN de ce prototype est DÉMO UNIQUEMENT. Le JS inline de ce
+    prototype (construction des datasets + remplissage des tableaux) devient un ViewModel
+    (données) + render_chart() ux-chartjs ; les tableaux sont rendus en Twig côté serveur.
+  - Les 2 iframes Zoho Analytics (FOB, fret) et les sections argent/structure de coût/DDP du
+    dashboard GitHub Pages actuel ne sont PAS reprises en v1 : les données correspondantes ne
+    sont pas encore dans le contrat JSON (extension de schéma candidate, schema_version 2) —
+    à trancher avant d'élargir la page. Le cours de l'argent (fx.xag_usd_oz) est lui déjà affiché.
+Écritures vers Zoho : aucune en v1. (Roadmap Lot 1 : formulaire d'abonnement hebdo → canal
+  ZohoLeadApiWriter existant, Lead_Source = portal.synapsun.com — spec séparée.)
+États vide/erreur :
+  - market_comment null (cas actuel) → bloc « L'analyse Synapsun » entièrement masqué
+    ({% if %} Twig) ; le contenu affiché dans ce prototype est SIMULÉ (data-simulated="true").
+  - JSON jamais importé → fallback entité Barometer existante (image + PDF mensuel,
+    mécanique barometer_missing.html.twig déjà en place).
+  - Import en échec / JSON périmé → la page sert la dernière version en base (résilience pull) ;
+    seuil de péremption suggéré : 9 jours (aligné sur health_check.py du pipeline).
+  - Série sans aucune valeur (ex. HJT 615-635W, jamais cotée) → exclue côté serveur (import).
+Feature flag souhaité : oui, nom : barometer_v2 (feature_toggle.yaml + #[BehindFeatureGate]) ;
+  rollback = désactiver le flag → retour au rendu actuel image + PDF.
+Cacheable : oui — contenu identique pour tous les visiteurs, varie 1×/semaine (signalé
+  conformément au pattern 11, pas de TTL proposé tant que la politique cache n'existe pas).
+Composants/données non trouvés dans le pack (à faire trancher) :
+  - Pas de composant « graphique » dans le SCSS du portail : la dataviz passe entièrement par
+    @symfony/ux-chartjs (pattern 7) — pas de nouveau composant CSS nécessaire (zéro
+    <style data-integration> dans ce prototype).
+  - Entrée de menu « Ressources → Baromètre des prix » : à ajouter dans
+    MenuNavigationExtension::getMenuMain() (clé menu.barometer proposée).
+  - Événements analytics (clic CTA contact, téléchargement PDF) : à implémenter côté IT
+    (question J1 du questionnaire).
+-->

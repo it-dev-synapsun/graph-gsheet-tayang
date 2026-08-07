@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Runbook — Upload snapshot baromètre juillet 2026 dans EasyAdmin</title>
+<style>
+  body { font-family: -apple-system, Segoe UI, Arial, sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; color: #1a1a2e; line-height: 1.6; background:#fafafa; }
+  h1 { color: #0f3460; border-bottom: 3px solid #e94560; padding-bottom: 10px; }
+  h2 { color: #16213e; margin-top: 32px; border-left: 4px solid #e94560; padding-left: 10px; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; background:#fff; }
+  th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; vertical-align: top; }
+  th { background: #0f3460; color: #fff; }
+  code { background: #eee; padding: 2px 5px; border-radius: 3px; font-size: 0.9em; }
+  blockquote { border-left: 4px solid #ccc; margin: 10px 0; padding: 8px 16px; background: #f0f0f0; font-style: italic; }
+  .meta { background:#fff; padding:14px 18px; border-radius:8px; border:1px solid #ddd; margin-bottom:24px; }
+  .status { background:#fff3cd; border:1px solid #ffe08a; padding:12px 16px; border-radius:8px; margin-top:24px; }
+  ol li, ul li { margin-bottom: 6px; }
+  .ok { color: #1a7a3c; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>Runbook — Upload du snapshot baromètre juillet 2026 dans EasyAdmin</h1>
+
+<div class="meta">
+<strong>Projet :</strong> Barometer (Synapsun)<br>
+<strong>Date :</strong> 2026-07-21<br>
+<strong>Action concernée :</strong> Uploader <code>snapshots/2026-07/</code> dans l'admin EasyAdmin <code>/barometre</code> avec le rôle <code>ROLE_BAROMETER</code>
+</div>
+
+<h2>Pourquoi cette action reste manuelle</h2>
+<p>La décision est déjà documentée dans <code>docs/ADAPTATIONS_INTEGRATION_SYNAPSUN_COM.md</code> :</p>
+<blockquote>Publication : <strong>Manuelle</strong> — un humain uploade image + PDF chaque mois via EasyAdmin (rôle <code>ROLE_BAROMETER</code>)</blockquote>
+<p>C'est un choix assumé (« court terme, zéro dev portail ») en attendant l'arbitrage hébergement de la Tâche 6.
+<strong>Claude Code n'a pas de session authentifiée sur l'admin de production synapsun.com</strong> — le rôle
+<code>ROLE_BAROMETER</code> est réservé à un compte humain réel (login + éventuel 2FA). Cette étape ne peut donc
+pas être automatisée depuis cet environnement : ce document prépare tout le travail en amont pour que Franck
+n'ait plus qu'à cliquer.</p>
+
+<h2>Pré-requis vérifiés (déjà faits)</h2>
+<p>Fichiers présents et conformes dans <code>C:\Claude\Synapsun\Barometer\snapshots6-07\</code> :</p>
+<table>
+<tr><th>Fichier</th><th>Taille</th><th>Limite serveur</th><th>Marge</th></tr>
+<tr><td>barometre-2026-07.png</td><td>1 749 472 octets (1.67 Mio)</td><td>2 048 000 octets (<code>Assert\Image(maxSize: '2048k')</code>)</td><td class="ok">✅ OK — 14,6 % de marge</td></tr>
+<tr><td>barometre-2026-07.pdf</td><td>1 302 164 octets (1.24 Mio)</td><td>4 096 000 octets (<code>Assert\File(maxSize: '4096k')</code>)</td><td class="ok">✅ OK — 68,2 % de marge</td></tr>
+</table>
+<p>Limites lues dans le code source : <code>synapsun_com/data/portal-repo/src/Domain/Barometer/Entity/ORM/Barometer.php</code></p>
+
+<h2>Étapes à réaliser (Franck, ~2 minutes)</h2>
+<ol>
+<li>Se connecter à l'admin EasyAdmin de production (<code>https://synapsun.com/admin</code> ou l'URL admin habituelle si différente) avec un compte disposant du rôle <code>ROLE_BAROMETER</code>.</li>
+<li>Menu <strong>Baromètre</strong> → bouton <strong>« Ajouter un baromètre »</strong> (route <code>admin_barometer_new</code>).</li>
+<li>Remplir le formulaire avec ces valeurs exactes :
+<table>
+<tr><th>Champ</th><th>Valeur à saisir</th></tr>
+<tr><td>Image (<code>imageFile</code>)</td><td><code>C:\Claude\Synapsun\Barometer\snapshots6-07arometre-2026-07.png</code></td></tr>
+<tr><td>PDF (<code>pdfFile</code>)</td><td><code>C:\Claude\Synapsun\Barometer\snapshots6-07arometre-2026-07.pdf</code></td></tr>
+<tr><td>Titre méta (<code>metaTitle</code>)</td><td>Baromètre des prix modules photovoltaïques — juillet 2026 | Synapsun</td></tr>
+<tr><td>Mots-clés méta (<code>metaKeywords</code>)</td><td>prix modules photovoltaïques, baromètre PV, prix polysilicium, prix wafer, modules TOPCon, FOB Chine, juillet 2026, Synapsun</td></tr>
+<tr><td>Description méta (<code>metaDescription</code>)</td><td>Baromètre Synapsun juillet 2026 : suivi hebdomadaire des prix de la filière photovoltaïque — polysilicium, wafers, cellules TOPCon, modules FOB Chine, verre solaire, fret maritime et taux de change EUR/USD/CNY.</td></tr>
+<tr><td>Date (période, <code>date</code>)</td><td>07/2026 (juillet 2026)</td></tr>
+</table>
+</li>
+<li>Valider. Un message de succès doit apparaître : « Baromètre du 07/2026 mis à jour ».</li>
+<li>Vérifier le rendu public : <code>https://synapsun.com/barometre</code> (et <code>/barometer</code> en EN) affiche bien la nouvelle image et le lien PDF de juillet 2026.</li>
+</ol>
+
+<h2>Traçabilité des sources utilisées pour préparer ce runbook</h2>
+<ul>
+<li>Contenu méta : <code>snapshots/2026-07/meta.txt</code></li>
+<li>Formulaire/entité : <code>synapsun_com/data/portal-repo/src/Domain/Barometer/Form/Type/BarometerType.php</code>, <code>.../Entity/ORM/Barometer.php</code></li>
+<li>Contrôleurs admin : <code>synapsun_com/data/portal-repo/src/Controller/Admin/BarometerController.php</code>, <code>BarometerFormController.php</code></li>
+<li>Rôles : <code>synapsun_com/data/portal-repo/config/packages/security.yaml</code> (<code>ROLE_BAROMETER: ROLE_SYNAPSUN</code>)</li>
+<li>Décision « publication manuelle » : <code>docs/ADAPTATIONS_INTEGRATION_SYNAPSUN_COM.md</code></li>
+</ul>
+
+<div class="status">
+☐ <strong>En attente de Franck</strong> — upload à réaliser manuellement dans l'admin de production. Tout le reste (fichiers, textes, chemins) est prêt et vérifié.
+</div>
+
+
+<section class="livrable-blocking-questions" aria-label="Questions à trancher">
+  <h2 class="lbq-title">⚠️ Question(s) à trancher par Franck</h2>
+  <p class="lbq-intro">Réponds directement ci-dessous : ta réponse est enregistrée comme <strong>décision</strong> — consignée pour exécution (le suivi projet et le travail débloqué sont traités à un run ultérieur, pas instantanément), et ce livrable est annoté avec ta réponse et sa date. Le document n'est pas réécrit.</p>
+  <ul class="lbq-list">
+    <li class="lbq-item" data-question-id="upload-easyadmin-2026-07">
+      <div class="lbq-question">Upload EasyAdmin du snapshot juillet 2026 effectué (rôle ROLE_BAROMETER) et rendu public /barometre vérifié ?</div>
+      <button type="button" class="lbq-answer-btn" data-question-id="upload-easyadmin-2026-07" data-question-text="Upload EasyAdmin du snapshot juillet 2026 effectué (rôle ROLE_BAROMETER) et rendu public /barometre vérifié ?">✍️ Répondre à cette question</button>
+    </li>
+  </ul>
+</section>
+<div id="feedback-widget" class="feedback-widget" data-project="Barometer">
+  <div class="feedback-container">
+    <label for="feedback-text">💬 Feedback sur ce livrable</label>
+    <textarea id="feedback-text" class="feedback-textarea" placeholder="Une correction, une priorité à revoir, un point à approfondir…" rows="3"></textarea>
+    <div class="feedback-mode-selector">
+      <span class="feedback-mode-label">⚙️ Traitement :</span>
+      <div class="feedback-mode-options">
+        <div class="feedback-mode-option">
+          <input type="radio" id="feedback-mode-immediate" name="feedback-mode" value="immediate" checked>
+          <label for="feedback-mode-immediate">⚡ Immédiat</label>
+          <span class="feedback-mode-hint">Claude traite maintenant</span>
+        </div>
+        <div class="feedback-mode-option">
+          <input type="radio" id="feedback-mode-queue" name="feedback-mode" value="queue">
+          <label for="feedback-mode-queue">⏳ Différé (nightly)</label>
+          <span class="feedback-mode-hint">Traité cette nuit</span>
+        </div>
+      </div>
+    </div>
+    <button id="feedback-submit" class="feedback-btn">📤 Envoyer</button>
+    <div id="feedback-status" class="feedback-status"></div>
+  </div>
+</div>
+<link rel="stylesheet" href="../../../Dashboard_Pilotage/scripts/assets/feedback-widget.css">
+<script src="../../../Dashboard_Pilotage/scripts/assets/feedback-widget.js"></script>
+</body>
+</html>

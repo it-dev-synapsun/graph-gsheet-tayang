@@ -218,7 +218,7 @@ Obstacle : la commande `python aggregate.py` et `git remote -v` ont nécessité 
 - `C:\Claude\Synapsun\Barometer\PROJECT.md` — frontmatter `projet:` renommé en `Barometer`, contexte nettoyé, plan d'action mis à jour (Tâ…
 
 ---
-## TASK-20260611-015129 — ⏸ token limit
+## TASK-20260611-015129 — 🔍 done — to review
 **Ajoutée :** 2026-06-11 01:51  
 **Source :** prochaine_action automatique  
 **Type :** doc  
@@ -227,10 +227,10 @@ Obstacle : la commande `python aggregate.py` et `git remote -v` ont nécessité 
 **Instructions :**
 Lot 1 roadmap v2 : abonnement email hebdo + commentaire de marché auto-généré (Claude) + alertes de prix internes
 
-**Résultat :** You've hit your session limit · resets 2:20am (Europe/Paris)
+**Résultat :** Orpheline — restée en IN_PROGRESS 27j 17h sans processus actif (runner interrompu) — statut corrigé automatiquement le 2026-07-08 19:11
 
 ---
-## TASK-20260612-094025 — ⏸ token limit
+## TASK-20260612-094025 — 🔍 done — to review
 **Ajoutée :** 2026-06-12 09:40  
 **Source :** prochaine_action automatique  
 **Type :** doc  
@@ -239,10 +239,10 @@ Lot 1 roadmap v2 : abonnement email hebdo + commentaire de marché auto-génér�
 **Instructions :**
 Lot 1 roadmap v2 : abonnement email hebdo + commentaire de marché auto-généré (Claude) + alertes de prix internes
 
-**Résultat :** You've hit your session limit · resets 1:10pm (Europe/Paris)
+**Résultat :** Orpheline — restée en IN_PROGRESS 26j 9h sans processus actif (runner interrompu) — statut corrigé automatiquement le 2026-07-08 19:11
 
 ---
-## TASK-20260613-014852 — ⏸ token limit
+## TASK-20260613-014852 — 🔍 done — to review
 **Ajoutée :** 2026-06-13 01:48  
 **Source :** prochaine_action automatique  
 **Type :** doc  
@@ -251,10 +251,10 @@ Lot 1 roadmap v2 : abonnement email hebdo + commentaire de marché auto-génér�
 **Instructions :**
 Lot 1 roadmap v2 : abonnement email hebdo + commentaire de marché auto-généré (Claude) + alertes de prix internes
 
-**Résultat :** You've hit your session limit · resets 4:50am (Europe/Paris)
+**Résultat :** Orpheline — restée en IN_PROGRESS 25j 17h sans processus actif (runner interrompu) — statut corrigé automatiquement le 2026-07-08 19:11
 
 ---
-## TASK-20260616-012659 — ⏸ token limit
+## TASK-20260616-012659 — 🔍 done — to review
 **Ajoutée :** 2026-06-16 01:26  
 **Source :** prochaine_action automatique  
 **Type :** other  
@@ -266,10 +266,10 @@ Lot 1 roadmap v2 : abonnement email hebdo + commentaire de marché auto-génér�
 **Instructions :**
 Test plan
 
-**Résultat :** You've hit your session limit · resets 4:40am (Europe/Paris)
+**Résultat :** Orpheline — restée en IN_PROGRESS 16j 6h sans processus actif (runner interrompu) — statut corrigé automatiquement le 2026-07-02 07:52
 
 ---
-## TASK-20260617-021553 — ⏸ token limit
+## TASK-20260617-021553 — 🔍 done — to review
 **Ajoutée :** 2026-06-17 02:15  
 **Source :** prochaine_action automatique  
 **Type :** other  
@@ -281,7 +281,7 @@ Test plan
 **Instructions :**
 Test plan
 
-**Résultat :** You've hit your session limit · resets 4:10am (Europe/Paris)
+**Résultat :** Orpheline — restée en IN_PROGRESS 15j 5h sans processus actif (runner interrompu) — statut corrigé automatiquement le 2026-07-02 07:52
 
 ---
 ## TASK-20260618-014027 — 🔍 done — to review
@@ -462,14 +462,143 @@ Test plan
 **Résultat :** - Commit local `58baba2` — documenté et prêt à pousser | ## NEXT STEPS | **Lundi 29 juin 2026 08:00 UTC** : vérifier le scraper cron pour W26-2026 (ou fallback W25-2026). Une fois TaiyangNews publie W25-2026, exécuter `python pv-price-scraper/fix_missing_weeks.py --start-week 25 --start-year 2026` pour backfiller. | ## QUESTIONS BLOQUANTES | Q: Credential manager Windows bloque le `git push` local (erreur credential persist). Le commit `58baba2` (DEPLOYMENT_AND_MONITORING_2026_Q2.md) est créé lo
 
 ---
-## TASK-20260627-113842 — 🔄 in progress
+## TASK-20260627-113842 — ⛔ blocked — needs information
 **Ajoutée :** 2026-06-27 11:38  
 **Source :** Pré-vol de '**Lundi 29 juin 2026 08:00 UTC** : vérif'  
 **Type :** bug  
 **Démarré :** 2026-06-27 11:38  
+**Terminé :** 2026-06-27 11:44  
+**Durée :** 5 min  
 **Prochaine action :** Diagnostiquer et configurer SSH ou credential manager pour résoudre l'erreur git push  
 
 **Instructions :**
 [Sous-tâche 1/4] Diagnostiquer et configurer SSH ou credential manager pour résoudre l'erreur git push
 
-**Résultat :** —
+**Résultat :** bad escape \s at position 118
+
+---
+## TASK-20260630-013344 — ⛔ blocked — needs information
+**Ajoutée :** 2026-06-30 01:33  
+**Source :** Plan — lancée depuis dashboard  
+**Type :** doc  
+**Démarré :** 2026-06-30 01:34  
+**Terminé :** 2026-06-30 02:35  
+**Durée :** 62 min  
+**Prochaine action :** Test plan  
+**Commentaire :** [Auto-reprise TOKEN_LIMIT]  
+
+**Instructions :**
+[Tâche manuelle] Test plan
+
+**Résultat :** {"type":"system","subtype":"hook_started","hook_id":"e8417fc9-2694-4474-aa50-7a5f6fb6cbae","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"23341fcd-0f61-46d6-bd9f-1fe77c6587a8","session_id":"ebed7c04-6a03-4e00-89f7-ccca60e91d16"}
+
+---
+## TASK-20260630-013346 — ⛔ blocked — needs information
+**Ajoutée :** 2026-06-30 01:33  
+**Source :** Plan — lancée depuis dashboard  
+**Type :** doc  
+**Démarré :** 2026-06-30 01:34  
+**Terminé :** 2026-06-30 02:35  
+**Durée :** 62 min  
+**Prochaine action :** Test plan  
+**Commentaire :** [Auto-reprise TOKEN_LIMIT]  
+
+**Instructions :**
+[Tâche manuelle] Test plan
+
+**Résultat :** {"type":"system","subtype":"hook_started","hook_id":"2c85b0b4-f5c4-4f86-ba94-34c84e8620c6","hook_name":"SessionStart:startup","hook_event":"SessionStart","uuid":"03c55c56-e3fe-4b04-ba70-51e3273a20e7","session_id":"02fef96d-b5b0-434d-9fe8-ec9f6c6abeba"}
+
+---
+## TASK-20260716-014822 — ⏸ token limit
+**Ajoutée :** 2026-07-16 01:48  
+**Source :** prochaine_action automatique  
+**Type :** review  
+**Démarré :** 2026-07-16 01:48  
+**Terminé :** 2026-07-16 01:49  
+**Durée :** 1 min  
+**Prochaine action :** @claude Vendredi 08:00 UTC (schedule auto). Vérifier la colonne W25-2026 dans le Google Sheet après le prochain run.  
+
+**Instructions :**
+@claude Vendredi 08:00 UTC (schedule auto). Vérifier la colonne W25-2026 dans le Google Sheet après le prochain run.
+
+**Résultat :** You've hit your weekly limit · resets Jul 18, 1pm (Europe/Paris)
+
+---
+## TASK-20260721-080134 — 🔍 done — to review
+**Ajoutée :** 2026-07-21 08:01  
+**Source :** prochaine_action automatique  
+**Type :** infra  
+**Démarré :** 2026-07-21 08:01  
+**Terminé :** 2026-07-21 08:06  
+**Durée :** 4 min  
+**PID runner :** 36172  
+**Prochaine action :** Vérifier le run cron export_json.yml vendredi 2026-07-24 09:00 UTC + uploader le snapshot snapshots/2026-07 dans l'admin /barometre (EasyAdmin, ROLE_BAROMETER) ; Phase 1 portail EN ATTENTE de l'arbitrage hébergement.  
+
+**Instructions :**
+Vérifier le run cron export_json.yml vendredi 2026-07-24 09:00 UTC + uploader le snapshot snapshots/2026-07 dans l'admin /barometre (EasyAdmin, ROLE_BAROMETER) ; Phase 1 portail EN ATTENTE de l'arbitrage hébergement.
+
+**Résultat :** ## FICHIERS | - PROJECT.md — frontmatter (prochaine_action, derniere_session) + ligne Historique récent 2026-07-21 mises à jour | ## NEXT STEPS | Après vendredi 2026-07-24 09h00 UTC : `gh run list --repo synapsun-dev/barometer-graph-gsheet --workflow export_json.yml` pour confirmer le premier run cron réel, puis Franck upload manuellement snapshots/2026-07/ (déjà validé conforme) dans EasyAdmin /barometre. | ## QUESTIONS BLOQUANTES | ---RAPPORT-FIN---
+
+---
+## TASK-20260721-080559 — 🔍 done — to review
+**Ajoutée :** 2026-07-21 08:05  
+**Source :** Pré-vol de 'Vérifier le run cron export_json.yml ven'  
+**Type :** review  
+**Démarré :** 2026-07-21 08:05  
+**Terminé :** 2026-07-21 08:11  
+**Durée :** 5 min  
+**PID runner :** 43820  
+**Prochaine action :** Vérifier le statut du run GitHub Actions export_json.yml pour vendredi 2026-07-24 09:00 UTC  
+
+**Instructions :**
+[Sous-tâche 1/2] Vérifier le statut du run GitHub Actions export_json.yml pour vendredi 2026-07-24 09:00 UTC
+
+**Résultat :** ## FICHIERS | - C:\Claude\Synapsun\Barometer\PROJECT.md — corrigé la corruption YAML de prochaine_action + ajouté une ligne d'historique (2026-07-21 08:05) | ## NEXT STEPS | Après vendredi 2026-07-24 09h00 UTC, exécuter `gh run list --repo synapsun-dev/barometer-graph-gsheet --workflow export_json.yml` pour confirmer que ce premier run cron réel s'est bien déclenché et a réussi. | ## QUESTIONS BLOQUANTES | ---RAPPORT-FIN---
+
+---
+## TASK-20260721-081101 — 🔍 done — to review
+**Ajoutée :** 2026-07-21 08:11  
+**Source :** Pré-vol de 'Vérifier le run cron export_json.yml ven'  
+**Type :** other  
+**Démarré :** 2026-07-21 08:11  
+**Terminé :** 2026-07-21 08:18  
+**Durée :** 8 min  
+**PID runner :** 43820  
+**Prochaine action :** Uploader le snapshot snapshots/2026-07 dans l'admin EasyAdmin /barometre avec ROLE_BAROMETER  
+
+**Instructions :**
+[Sous-tâche 2/2] Uploader le snapshot snapshots/2026-07 dans l'admin EasyAdmin /barometre avec ROLE_BAROMETER
+
+**Résultat :** - PROJECT.md — prochaine_action corrigée, Tâche 5bis ajoutée (checklist upload juillet), question bloquante ajoutée, historique mis à jour | ## NEXT STEPS | Franck : ouvrir le runbook (livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.html ou .md), se connecter à l'admin EasyAdmin de production avec un compte ROLE_BAROMETER, et suivre les 5 étapes pour uploader image + PDF de juillet 2026. | ## QUESTIONS BLOQUANTES | Q: Upload EasyAdmin du snapshot juillet 2026 effectué (rôle ROLE_BAROMETER)
+
+---
+## TASK-20260722-102411 — 🔍 done — to review
+**Ajoutée :** 2026-07-22 10:24  
+**Source :** prochaine_action automatique  
+**Type :** other  
+**Démarré :** 2026-07-22 10:24  
+**Terminé :** 2026-07-22 10:26  
+**Durée :** 2 min  
+**PID runner :** 33088  
+**Prochaine action :** Franck : ouvrir le runbook (livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.html ou .md), se connecter à l'admin EasyAdmin de production avec un compte ROLE_BAROMETER, et suivre les 5 étapes pour uploader image + PDF de juillet 2026. ## QUESTIONS BLOQUANTES Q: Upload EasyAdmin du snapshot juillet 2026 effectué (rôle ROLE_BAROMETER) et rendu public /barometre vérifié ? Runbook prêt : livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md  
+
+**Instructions :**
+Franck : ouvrir le runbook (livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.html ou .md), se connecter à l'admin EasyAdmin de production avec un compte ROLE_BAROMETER, et suivre les 5 étapes pour uploader image + PDF de juillet 2026. ## QUESTIONS BLOQUANTES Q: Upload EasyAdmin du snapshot juillet 2026 effectué (rôle ROLE_BAROMETER) et rendu public /barometre vérifié ? Runbook prêt : livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md
+
+**Résultat :** - PROJECT.md — historique + prochaine_action corrigée (dé-corrompue) + derniere_session mise à jour | ## NEXT STEPS | Franck ouvre livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md (ou .html), se connecte à l'admin EasyAdmin avec un compte ROLE_BAROMETER et effectue les 5 étapes d'upload du snapshot juillet 2026. | ## QUESTIONS BLOQUANTES | Q: Upload EasyAdmin du snapshot juillet 2026 effectué (rôle ROLE_BAROMETER) et rendu public /barometre vérifié ? Runbook prêt : livrables/RUNBOOK_UPLOA
+
+---
+## TASK-20260803-135800 — 🔍 done — to review
+**Ajoutée :** 2026-08-03 13:58  
+**Source :** prochaine_action automatique  
+**Type :** other  
+**Démarré :** 2026-08-03 13:58  
+**Terminé :** 2026-08-03 14:02  
+**Durée :** 5 min  
+**PID runner :** 18412  
+**Prochaine action :** Franck ouvre livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md (ou .html), se connecte à l'admin EasyAdmin avec un compte ROLE_BAROMETER et effectue les 5 étapes d'upload du snapshot juillet 2026. ## QUESTIONS BLOQUANTES Q: Upload EasyAdmin du snapshot juillet 2026 effectué (rôle ROLE_BAROMETER) et rendu public /barometre vérifié ? Runbook prêt : livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md  
+
+**Instructions :**
+Franck ouvre livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md (ou .html), se connecte à l'admin EasyAdmin avec un compte ROLE_BAROMETER et effectue les 5 étapes d'upload du snapshot juillet 2026. ## QUESTIONS BLOQUANTES Q: Upload EasyAdmin du snapshot juillet 2026 effectué (rôle ROLE_BAROMETER) et rendu public /barometre vérifié ? Runbook prêt : livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md
+
+**Résultat :** ## NEXT STEPS | Franck ouvre livrables/RUNBOOK_UPLOAD_EASYADMIN_BAROMETRE_2026-07.md, se connecte à l'admin EasyAdmin (rôle ROLE_BAROMETER) et effectue les 5 étapes d'upload du snapshot juillet 2026, puis vérifie que /barometre affiche bien le nouveau contenu. | ## QUESTIONS BLOQUANTES | Q: Upload EasyAdmin du snapshot juillet 2026 effectué (rôle ROLE_BAROMETER) et rendu public /barometre vérifié ? | Q: Franck peut-il ré-authentifier le compte gh synapsun-dev (gh auth login) pour rétablir la vér
